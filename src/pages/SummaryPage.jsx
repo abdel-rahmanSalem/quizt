@@ -1,6 +1,7 @@
 import { useUser } from "../contexts/UserContext";
 import Button from "../components/Button";
 import ExamSummary from "../components/ExamSummary";
+import { Link } from "react-router-dom";
 
 function SummaryPage() {
   const { username, quiz } = useUser();
@@ -12,7 +13,9 @@ function SummaryPage() {
       <h2 className="text-3xl font-bold mb-6">{title} Exam Summary</h2>
       <ExamSummary />
       <div className="flex justify-between">
-        <Button type="primary">Home</Button>
+        <Link to="/">
+          <Button type="primary">Home</Button>
+        </Link>
         <Button type="secondary">Attempt Another Quiz</Button>
       </div>
     </div>
