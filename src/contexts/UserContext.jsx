@@ -70,13 +70,13 @@ function reducer(state, action) {
         ...state,
         userScore: state.userScore + action.payload,
         currentAnswer: -1,
-        questionsIndexor: state.questionsIndexor++,
+        questionsIndexor: state.questionsIndexor + 1,
       };
     case "wrongAnswer":
       return {
         ...state,
         currentAnswer: -1,
-        questionsIndexor: state.questionsIndexor++,
+        questionsIndexor: state.questionsIndexor + 1,
       };
     case "correctFinalAnswer":
       return {
