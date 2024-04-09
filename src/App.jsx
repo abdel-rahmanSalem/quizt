@@ -3,7 +3,7 @@ import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
 import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
 import ProtectedQuestionsRoute from "./protectedRoutes/ProtectedQuestionsRoute";
 import "react-toastify/dist/ReactToastify.css";
-import Global from "./components/Global";
+import Global from "./components/GlobalUser";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/HomePage";
 import Username from "./pages/UsernamePage";
@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Quiz from "./pages/QuizPage";
 import Questions from "./pages/QuestionPage";
 import SummaryPage from "./pages/SummaryPage";
+import { HosterProvider } from "./contexts/HosterContext";
 
 function App() {
   return (
@@ -83,9 +84,9 @@ function App() {
         <Route
           path="/login"
           element={
-            <Global style={"flex-col"}>
+            <HosterProvider>
               <Login />
-            </Global>
+            </HosterProvider>
           }
         ></Route>
         <Route

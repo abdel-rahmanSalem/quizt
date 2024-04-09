@@ -37,7 +37,7 @@ function GlobalProvider({ children }) {
 function useGlobal() {
   const context = useContext(GlobalContext);
   if (context === undefined)
-    throw new Error("QuizContext was used outside of the QuizProvider");
+    throw new Error("GlobalContext was used outside of the QuizProvider");
   return context;
 }
 

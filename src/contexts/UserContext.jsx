@@ -330,7 +330,7 @@ function UserProvider({ children }) {
 function useUser() {
   const context = useContext(UserContext);
   if (context === undefined)
-    throw new Error("QuizContext was used outside of the QuizProvider");
+    throw new Error("UserContext was used outside of the QuizProvider");
   return context;
 }
 

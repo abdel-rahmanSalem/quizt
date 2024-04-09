@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
-import Navbar from "./Navbar";
-import Main from "./Main";
+import Navbar from "./Navbar.jsx";
+import Main from "./MainUser.jsx";
+import { UserProvider } from "../contexts/UserContext.jsx";
 
 function Global({ children, style }) {
   return (
-    <>
+    <UserProvider>
       <Navbar />
       <Main style={style}>{children}</Main>
-    </>
+    </UserProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import { useGlobal } from "../contexts/UserContext";
+import { useGlobal } from "../contexts/GlobalContext";
 
 function ToastCont() {
   const { ToastContainer } = useGlobal();
