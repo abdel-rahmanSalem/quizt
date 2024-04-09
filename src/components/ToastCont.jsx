@@ -1,7 +1,7 @@
-import { useUser } from "../contexts/UserContext";
+import { useGlobal } from "../contexts/UserContext";
 
 function ToastCont() {
-  const { ToastContainer } = useUser();
+  const { ToastContainer } = useGlobal();
 
   return (
     <ToastContainer

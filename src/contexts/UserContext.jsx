@@ -1,12 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 
-import { ToastContainer, toast } from "react-toastify";
-
-const supabaseUrl = import.meta.env.VITE_REACT_APP_SUPABASE_API_URL;
-const supabaseKey = import.meta.env.VITE_REACT_APP_ANON_API_KEY;
-const quiztServer = createClient(supabaseUrl, supabaseKey);
+import { useGlobal } from "./GlobalContext";
 
 const UserContext = createContext();
 
@@ -95,6 +90,7 @@ function reducer(state, action) {
 }
 
 function UserProvider({ children }) {
+  const { quiztServer, notify } = useGlobal();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
@@ -221,7 +217,7 @@ function UserProvider({ children }) {
       }
     }
     fetchQuiz();
-  }, [quizStatus, quizId, username, isUser]);
+  }, [quizStatus, quizId, username, isUser, quiztServer, notify]);
 
   //fetching the questions
   function handleUserStartQuiz() {
@@ -251,7 +247,7 @@ function UserProvider({ children }) {
       }
     }
     fetchQuestions();
-  }, [questionsStatus, quizId]);
+  }, [notify, questionsStatus, quizId, quiztServer]);
 
   // handle answering the question
   function handleNewAnswer(optionIndex) {
@@ -299,24 +295,11 @@ function UserProvider({ children }) {
       }
     }
     updateUserScore();
-  }, [userScore, username]);
-
-  const notify = (message, pos, type) =>
-    toast[type](message, {
-      position: pos,
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+  }, [quiztServer, userScore, username]);
 
   return (
     <UserContext.Provider
       value={{
-        quiztServer,
         isValidUser,
         isUser,
         user,
@@ -331,7 +314,6 @@ function UserProvider({ children }) {
         currentQuestion,
         currentAnswer,
         isQuizEnd,
-        ToastContainer,
         notify,
         submitNewUser,
         checkQuizId,
