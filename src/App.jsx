@@ -39,7 +39,9 @@ function App() {
           path="/quiz-id"
           element={
             <Global style={"flex-col"}>
-              <QuizId />
+              <ProtectedUserRoute>
+                <QuizId />
+              </ProtectedUserRoute>
             </Global>
           }
         ></Route>

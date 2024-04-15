@@ -1,10 +1,10 @@
 import { useUser } from "../contexts/UserContext";
 import Button from "../components/Button";
 import ExamSummary from "../components/ExamSummary";
-import { Link } from "react-router-dom";
+import { IoShareOutline } from "react-icons/io5";
 
 function SummaryPage() {
-  const { username, quiz } = useUser();
+  const { username, quiz, notify, handleAttemptAnotherQuiz } = useUser();
   const { title } = quiz;
 
   return (
@@ -17,12 +17,17 @@ function SummaryPage() {
       </h2>
       <ExamSummary />
       <div className="flex justify-between">
-        <Link to="/">
-          <Button type="primary">Home</Button>
-        </Link>
-        <Link to="/">
-          <Button type="secondary">Attempt Another Quiz</Button>
-        </Link>
+        <Button onClick={handleAttemptAnotherQuiz} type="primary">
+          Attempt Another Quiz
+        </Button>
+        <button
+          onClick={() =>
+            notify("This feature is underdevelopment", "top-right", "info")
+          }
+          className="flex items-center py-2 px-4 hover:-translate-y-2 transition duration-200 ease-in-out "
+        >
+          <IoShareOutline size={33} />
+        </button>
       </div>
     </div>
   );

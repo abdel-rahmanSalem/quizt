@@ -2,7 +2,11 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import HeaderText from "../components/HeaderText";
 
+import { useUser } from "../contexts/UserContext";
+
 function Home() {
+  const { notify } = useUser();
+
   return (
     <>
       <HeaderText>Hi there, Welcome to our Quiz Application</HeaderText>
@@ -10,8 +14,15 @@ function Home() {
         <Link to="/new-user">
           <Button type="primary">Join a Quiz</Button>
         </Link>
-        <Link to="/login">
-          <Button type="secondary">Host a Quiz</Button>
+        <Link>
+          <Button
+            onClick={() =>
+              notify("This feature is underdevelopment", "top-right", "info")
+            }
+            type="secondary"
+          >
+            Host a Quiz
+          </Button>
         </Link>
       </div>
     </>

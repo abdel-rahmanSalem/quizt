@@ -8,7 +8,7 @@ function ProtectedUserRoute({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isUser) navigate("/");
+    if (!isUser) navigate("/new-user");
   }, [isUser, navigate]);
 
   return isUser ? children : null;

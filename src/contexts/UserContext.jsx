@@ -78,13 +78,19 @@ function reducer(state, action) {
         ...state,
         userScore: state.userScore + action.payload,
         currentAnswer: -1,
+        questionsIndexor: 0,
         isQuizEnd: true,
       };
     case "wrongFinalAnswer":
       return {
         ...state,
         currentAnswer: -1,
+        questionsIndexor: 0,
         isQuizEnd: true,
+      };
+    case "joinAnotherQuiz":
+      return {
+        ...initialState,
       };
   }
 }
@@ -165,28 +171,6 @@ function UserProvider({ children }) {
     dispatch({ type: "fetchQuiz", payload: Number(id) });
   }
   useEffect(() => {
-    async function createNewUser() {
-      // Insert new user into the database
-      const { data, error } = await quiztServer
-        .from("users")
-        .insert([
-          {
-            user_name: username,
-            quiz_id: quizId,
-          },
-        ])
-        .select()
-        .single();
-
-      if (error) {
-        throw error;
-      }
-      if (data) {
-        dispatch({ type: "fetchUser/succes", payload: data });
-      }
-    }
-
-    //fetching the quiz data, create newuser
     async function fetchQuiz() {
       if (quizStatus === "fetching") {
         const { data, error } = await quiztServer
@@ -205,19 +189,46 @@ function UserProvider({ children }) {
         }
 
         if (data) {
-          await createNewUser();
-          if (isUser) {
-            dispatch({
-              type: "fetchQuiz/received",
-              payload: data,
-            });
-            notify("Correct Quiz ID", "top-right", "success");
-          }
+          dispatch({
+            type: "fetchQuiz/received",
+            payload: data,
+          });
+          notify("Correct Quiz ID", "top-right", "success");
         }
       }
     }
-    fetchQuiz();
-  }, [quizStatus, quizId, username, isUser, quiztServer, notify]);
+    if (quizStatus === "fetching") {
+      fetchQuiz();
+    }
+  }, [notify, quizId, quizStatus, quiztServer]);
+
+  useEffect(() => {
+    async function createNewUser() {
+      // Insert new user into the database
+      if (quizStatus === "loaded") {
+        const { data, error } = await quiztServer
+          .from("users")
+          .insert([
+            {
+              user_name: username,
+              quiz_id: quizId,
+            },
+          ])
+          .select()
+          .single();
+
+        if (error) {
+          throw error;
+        }
+        if (data) {
+          dispatch({ type: "fetchUser/succes", payload: data });
+        }
+      }
+    }
+    if (quizStatus === "loaded") {
+      createNewUser();
+    }
+  }, [quizId, quizStatus, quiztServer, username]);
 
   //fetching the questions
   function handleUserStartQuiz() {
@@ -297,6 +308,10 @@ function UserProvider({ children }) {
     updateUserScore();
   }, [quiztServer, userScore, username]);
 
+  function handleAttemptAnotherQuiz() {
+    dispatch({ type: "joinAnotherQuiz" });
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -320,6 +335,7 @@ function UserProvider({ children }) {
         handleUserStartQuiz,
         handleNewAnswer,
         handleNextQuestion,
+        handleAttemptAnotherQuiz,
       }}
     >
       {children}
