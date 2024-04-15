@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaGithub, FaLinkedin } from "react-icons/fa"; // Import social icons
 
 function Navbar() {
   return (
@@ -10,7 +11,7 @@ function Navbar() {
               Quizt
             </Link>
           </div>
-          <div className="flex space-x-4">
+          <div className="flex items-center space-x-4">
             <Link
               to="/login"
               className="text-gray-300 text-lg hover:text-white"
@@ -23,6 +24,24 @@ function Navbar() {
             >
               Join
             </Link>
+            <div className="border-l border-gray-600 h-6"></div>{" "}
+            {/* Vertical line */}
+            <a
+              href="https://github.com/abdel-rahmanSalem"
+              className="text-gray-300 text-lg hover:text-white transition duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGithub className="h-6 w-6" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/abd-el-rahman-salem"
+              className="text-gray-300 text-lg hover:text-white transition duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaLinkedin className="h-6 w-6" />
+            </a>
           </div>
         </div>
       </div>
