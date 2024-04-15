@@ -19,6 +19,7 @@ const initialState = {
   questions: [],
   questionsIndexor: 0,
   currentAnswer: -1,
+  secondsRemaining: -1,
 };
 
 function reducer(state, action) {
@@ -38,6 +39,7 @@ function reducer(state, action) {
         ...state,
         quizStatus: "loaded",
         quiz: action.payload,
+        secondsRemaining: Number(action.payload.time * 60),
       };
     case "fetchQuiz/failed":
       return { ...state, quizStatus: "failed", quiz: {} };
@@ -92,6 +94,12 @@ function reducer(state, action) {
       return {
         ...initialState,
       };
+    case "tick":
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+        isQuizEnd: state.secondsRemaining === 0 ? true : state.isQuizEnd,
+      };
   }
 }
 
@@ -113,6 +121,7 @@ function UserProvider({ children }) {
     questionsIndexor,
     currentAnswer,
     isQuizEnd,
+    secondsRemaining,
   } = state;
 
   const currentQuestion = questions.at(questionsIndexor);
@@ -260,6 +269,10 @@ function UserProvider({ children }) {
     fetchQuestions();
   }, [notify, questionsStatus, quizId, quiztServer]);
 
+  function tick() {
+    dispatch({ type: "tick" });
+  }
+
   // handle answering the question
   function handleNewAnswer(optionIndex) {
     dispatch({ type: "newAnswer", payload: optionIndex });
@@ -330,8 +343,10 @@ function UserProvider({ children }) {
         currentAnswer,
         isQuizEnd,
         notify,
+        secondsRemaining,
         submitNewUser,
         checkQuizId,
+        tick,
         handleUserStartQuiz,
         handleNewAnswer,
         handleNextQuestion,
