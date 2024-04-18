@@ -28,9 +28,9 @@ function QuizId() {
   if (quizStatus === "fetching") return <Loader>Joining the quiz...</Loader>;
 
   return (
-    <>
+    <div className="flex flex-col justify-center content-center px-10">
       <HeaderText>👋 Welcome {username}, Enter your quiz ID: </HeaderText>
-      <form className="flex gap-8 mb-6" onSubmit={handleSubmit}>
+      <form className="flex justify-between gap-8" onSubmit={handleSubmit}>
         <input
           autoFocus
           maxLength="20"
@@ -43,7 +43,7 @@ function QuizId() {
         />
         <Button type="primary">Join</Button>
       </form>
-    </>
+    </div>
   );
 }
 
