@@ -30,7 +30,7 @@ function QuizId() {
   return (
     <>
       <HeaderText>👋 Welcome {username}, Enter your quiz ID: </HeaderText>
-      <form className="flex gap-8 px-4" onSubmit={handleSubmit}>
+      <form className="flex gap-2" onSubmit={handleSubmit}>
         <input
           autoFocus
           maxLength="20"
