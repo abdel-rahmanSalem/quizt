@@ -15,7 +15,7 @@ function Main({ children, style }) {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center bg-gray-900 text-white ${style}`}
+      className={`flex flex-col justify-center items-center bg-gray-900 text-white ${style} px-8`}
       style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
     >
       <ToastCont />
