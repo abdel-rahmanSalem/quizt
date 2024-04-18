@@ -21,10 +21,10 @@ function Username() {
   }, [isValidUser, navigate]);
 
   return (
-    <div className="flex flex-col justify-center content-center px-10 ">
+    <>
       <HeaderText>What is your name?</HeaderText>
 
-      <form className="flex justify-between gap-8" onSubmit={handleSubmit}>
+      <form className="flex gap-8" onSubmit={handleSubmit}>
         <input
           autoFocus
           maxLength="20"
@@ -38,7 +38,7 @@ function Username() {
 
         <Button type="primary">Next</Button>
       </form>
-    </div>
+    </>
   );
 }
 
