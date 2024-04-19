@@ -12,11 +12,7 @@ function CompletionMessage({ percentage }) {
     completionMessage =
       "Unfortunately, you did not pass the exam. Keep practicing!";
   }
-  return (
-    <>
-      <p className="mb-4">{completionMessage}</p>
-    </>
-);
+  return <p className="mb-4">{completionMessage}</p>;
 }
 
 CompletionMessage.propTypes = {

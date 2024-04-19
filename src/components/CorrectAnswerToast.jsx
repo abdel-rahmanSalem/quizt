@@ -12,14 +12,12 @@ const CorrectAnswerToast = () => {
         <p className="border-b-4 border-white border-opacity-50 px-6 py-4 flex items-center justify-between gap-6 ">{showCorrectAnswers ? <>Hide Corrected Answers <FaArrowDown /></> : <>Display Corrected Answers <FaArrowUp /></>}</p>
         <div className='max-h-24 overflow-y-auto'>
             {
-                showCorrectAnswers ? 
+                showCorrectAnswers &&
                 <ul className="px-6 py-2 flex flex-col gap-2">
                     {
                     correction.map((correct, index) => (<li key={index} className="text-lg flex gap-4">Q{correct.index + 1} : {correct.answer}</li>))
                     }
                 </ul>
-                :
-                null
             }
         </div>
       </div>
