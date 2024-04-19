@@ -132,7 +132,7 @@ function UserProvider({ children }) {
 
   // fetching the quiz by id
   async function checkQuizId(id) {
-    if (id.length > 0 && id.length < 4) {
+    if (id.trim().length < 4) {
       notify("Should be more than three characters", "top-right", "warn");
       return;
     }
