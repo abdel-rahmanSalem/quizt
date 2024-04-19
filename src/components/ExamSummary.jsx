@@ -2,6 +2,7 @@ import { useUser } from "../contexts/UserContext";
 import Rank from "../components/Rank";
 import CompletionMessage from "../components/CompletionMessage";
 import Percentage from "../components/Percentage";
+import QuizQuestionsRow from "./QuizQuestionsRow";
 function ExamSummary() {
   const { quiz, user } = useUser();
   const { max_points } = quiz;
@@ -11,6 +12,7 @@ function ExamSummary() {
   return (
     <>
       <CompletionMessage percentage={percentage} />
+      <QuizQuestionsRow />
       <p className="mb-4">
         Final Score: {score} / {max_points}
       </p>

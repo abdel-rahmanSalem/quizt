@@ -9,7 +9,7 @@ function SummaryPage() {
   const { title } = quiz;
 
   return (
-    <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg ">
+    <div className="bg-gray-900 text-white p-8 rounded-lg shadow-md">
       <CorrectAnswerToast />
       <h1 className="text-2xl md:text-3xl font-bold mb-6">
         Welcome, {username}!

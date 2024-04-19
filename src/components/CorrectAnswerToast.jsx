@@ -5,7 +5,7 @@ const CorrectAnswerToast = () => {
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const { correction } = useUser();
   
-  if(correction.length < 1) return;
+  if(correction.length < 1) return; //if the user didn't make mistakes the component will just early return
 
   return (
     <div className="absolute  left-5 bottom-5 bg-green-500 rounded-lg cursor-pointer min-w-[20rem] select-none" onClick={() => setShowCorrectAnswers(!showCorrectAnswers)}>
