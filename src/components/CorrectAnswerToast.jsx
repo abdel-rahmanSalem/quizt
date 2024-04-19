@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { useUser } from '../contexts/UserContext';
+
 const CorrectAnswerToast = () => {
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const { correction } = useUser();
