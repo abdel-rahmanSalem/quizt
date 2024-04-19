@@ -2,15 +2,18 @@ import { useUser } from "../contexts/UserContext";
 import Button from "../components/Button";
 import ExamSummary from "../components/ExamSummary";
 import { IoShareOutline } from "react-icons/io5";
+import CorrectAnswerToast from "../components/CorrectAnswerToast";
 
 function SummaryPage() {
-  const { username, quiz, notify, handleAttemptAnotherQuiz } = useUser();
+  const { username, quiz, notify, handleAttemptAnotherQuiz} = useUser();
   const { title } = quiz;
 
   return (
-    <div className="bg-gray-900 text-white p-8 rounded-lg shadow-md">
+    <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg ">
+      <CorrectAnswerToast />
       <h1 className="text-2xl md:text-3xl font-bold mb-6">
         Welcome, {username}!
+        
       </h1>
       <h2 className="text-2xl md:text-3xl font-bold mb-6">
         {title} Exam Summary

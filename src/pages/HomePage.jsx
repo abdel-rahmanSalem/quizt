@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import HeaderText from "../components/HeaderText";
 
 import { useUser } from "../contexts/UserContext";
+import CorrectAnswerToast from "../components/CorrectAnswerToast";
 
 function Home() {
   const { notify } = useUser();
@@ -10,6 +11,7 @@ function Home() {
   return (
     <>
       <HeaderText>Hi there, Welcome to our Quiz Application</HeaderText>
+      <CorrectAnswerToast />
       <div className="flex justify-between items-center gap-8">
         <Link to="/new-user">
           <Button type="primary">Join a Quiz</Button>

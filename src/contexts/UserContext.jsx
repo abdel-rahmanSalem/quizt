@@ -11,6 +11,9 @@ const initialState = {
   isUser: false,
   user: {},
   userScore: 0,
+  userCorrectAnswers: 0,
+  ansArray: [],
+  correction: [],
   quizStatus: "unKnown",
   quizId: -1,
   quiz: {},
@@ -66,6 +69,8 @@ function reducer(state, action) {
       return {
         ...state,
         userScore: state.userScore + action.payload,
+        userCorrectAnswers: state.userCorrectAnswers + 1,
+        ansArray: [...state.ansArray , "correct"],
         currentAnswer: -1,
         questionsIndexor: state.questionsIndexor + 1,
       };
@@ -73,12 +78,16 @@ function reducer(state, action) {
       return {
         ...state,
         currentAnswer: -1,
+        ansArray: [...state.ansArray , "incorrect"],
+        correction: [...state.correction, {answer:action.payload, index: state.questionsIndexor}],
         questionsIndexor: state.questionsIndexor + 1,
       };
     case "correctFinalAnswer":
       return {
         ...state,
         userScore: state.userScore + action.payload,
+        userCorrectAnswers: state.userCorrectAnswers + 1,
+        ansArray: [...state.ansArray , "correct"],
         currentAnswer: -1,
         questionsIndexor: 0,
         isQuizEnd: true,
@@ -87,6 +96,8 @@ function reducer(state, action) {
       return {
         ...state,
         currentAnswer: -1,
+        ansArray: [...state.ansArray , "incorrect"],
+        correction: [...state.correction, {answer:action.payload, index: state.questionsIndexor}],
         questionsIndexor: 0,
         isQuizEnd: true,
       };
@@ -113,6 +124,9 @@ function UserProvider({ children }) {
     isUser,
     user,
     userScore,
+    userCorrectAnswers,
+    correction,
+    ansArray,
     quizStatus,
     quizId,
     quiz,
@@ -292,14 +306,14 @@ function UserProvider({ children }) {
         });
         return;
       } else {
-        dispatch({ type: "wrongFinalAnswer" });
+        dispatch({ type: "wrongFinalAnswer", payload: currentQuestion.options[currentQuestion.correct_option] });
         return;
       }
     }
 
     if (currentAnswer === currentQuestion.correct_option)
       dispatch({ type: "correctAnswer", payload: currentQuestion.points });
-    else dispatch({ type: "wrongAnswer" });
+    else dispatch({ type: "wrongAnswer", payload: currentQuestion.options[currentQuestion.correct_option] });
   }
 
   // update cloud user score
@@ -307,7 +321,7 @@ function UserProvider({ children }) {
     async function updateUserScore() {
       const { data, error } = await quiztServer
         .from("users")
-        .update({ score: userScore })
+        .update({ score: userScore, num_correct_questions: userCorrectAnswers })
         .eq("user_name", username)
         .select();
 
@@ -319,7 +333,7 @@ function UserProvider({ children }) {
       }
     }
     updateUserScore();
-  }, [quiztServer, userScore, username]);
+  }, [quiztServer, userScore, username, userCorrectAnswers]);
 
   function handleAttemptAnotherQuiz() {
     dispatch({ type: "joinAnotherQuiz" });
@@ -332,6 +346,8 @@ function UserProvider({ children }) {
         isUser,
         user,
         userScore,
+        ansArray,
+        correction,
         username,
         quizId,
         quizStatus,
