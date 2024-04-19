@@ -17,7 +17,7 @@ function Username() {
   }
 
   useEffect(() => {
-    if (isValidUser) navigate("/quiz-id", { replace: true });
+    if (isValidUser) navigate("/quiz", { replace: true });
   }, [isValidUser, navigate]);
 
   return (

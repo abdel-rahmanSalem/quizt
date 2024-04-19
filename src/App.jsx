@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
-import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
-import ProtectedQuestionsRoute from "./protectedRoutes/ProtectedQuestionsRoute";
+// import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
+// import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
+// import ProtectedQuestionsRoute from "./protectedRoutes/ProtectedQuestionsRoute";
 import "react-toastify/dist/ReactToastify.css";
 import Global from "./components/GlobalUser";
 import PageNotFound from "./pages/PageNotFound";
@@ -39,9 +39,7 @@ function App() {
           path="/quiz-id"
           element={
             <Global style={"flex-col"}>
-              <ProtectedUserRoute>
-                <QuizId />
-              </ProtectedUserRoute>
+              <QuizId />
             </Global>
           }
         ></Route>
@@ -49,11 +47,7 @@ function App() {
           path="quiz"
           element={
             <Global>
-              <ProtectedUserRoute>
-                <ProtectedQuizRoute>
-                  <Quiz />
-                </ProtectedQuizRoute>
-              </ProtectedUserRoute>
+              <Quiz />
             </Global>
           }
         ></Route>
@@ -61,13 +55,7 @@ function App() {
           path="/quiz/questions"
           element={
             <Global>
-              <ProtectedUserRoute>
-                <ProtectedQuizRoute>
-                  <ProtectedQuestionsRoute>
-                    <Questions />
-                  </ProtectedQuestionsRoute>
-                </ProtectedQuizRoute>
-              </ProtectedUserRoute>
+              <Questions />
             </Global>
           }
         ></Route>
@@ -75,11 +63,7 @@ function App() {
           path="/quiz/summary"
           element={
             <Global>
-              <ProtectedUserRoute>
-                <ProtectedQuizRoute>
-                  <SummaryPage />
-                </ProtectedQuizRoute>
-              </ProtectedUserRoute>
+              <SummaryPage />
             </Global>
           }
         ></Route>
