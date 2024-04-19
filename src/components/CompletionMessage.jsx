@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useUser } from "../contexts/UserContext";
 
 function CompletionMessage({ percentage }) {
-  const { quiz} = useUser();
+  const { quiz } = useUser();
   const { passing_percentage } = quiz;
   // Determine completion message based on percentage
   let completionMessage;
