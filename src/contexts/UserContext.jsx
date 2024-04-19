@@ -6,9 +6,8 @@ import { useGlobal } from "./GlobalContext";
 const UserContext = createContext();
 
 const initialState = {
-  loadingStatus: "unKnown",
+  status: "unKnown",
   username: "",
-  isValidUser: false,
   isUser: false,
   user: {},
   userScore: 0,
@@ -24,28 +23,38 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "validUser":
-      return { ...state, isValidUser: true, username: action.payload };
-    case "fetchUser/succes":
-      return { ...state, isUser: true, user: action.payload };
     case "loading":
       return {
         ...state,
-        loadingStatus: "loading",
+        status: "loading",
       };
     case "fetchQuiz/received":
       return {
         ...state,
-        loadingStatus: "loaded",
-        quiz: action.payload,
-        quizId: action.id,
+        status: "quizLoaded",
+        quiz: action.payload.quiz,
+        quizId: action.payload.quizId,
         secondsRemaining: Number(action.payload.time * 60),
       };
     case "fetchQuiz/failed":
       return {
         ...state,
-        loadingStatus: "failed",
+        status: "quizFailed",
         quiz: {},
+      };
+    case "insertUser/succes":
+      return {
+        ...state,
+        status: "userLoaded",
+        isUser: true,
+        user: action.payload.user,
+        username: action.payload.username,
+      };
+    case "insertUser/failed":
+      return {
+        ...state,
+        status: "userfailed",
+        user: {},
       };
     case "fetchQuestions":
       return { ...state, questionsStatus: "fetching" };
@@ -112,9 +121,8 @@ function UserProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
-    loadingStatus,
+    status,
     username,
-    isValidUser,
     isUser,
     user,
     userScore,
@@ -144,7 +152,6 @@ function UserProvider({ children }) {
       .single();
 
     if (error) {
-      console.log(error);
       if (error.code === "22P02")
         notify("Should be a number", "top-right", "error");
       if (error.code === "PGRST116")
@@ -155,30 +162,45 @@ function UserProvider({ children }) {
     if (data) {
       dispatch({
         type: "fetchQuiz/received",
-        payload: data,
-        id: id,
+        payload: { quiz: data, quizId: id },
       });
       notify("Correct Quiz ID", "top-right", "success");
     }
   }
   // handle newusers
   async function submitNewUser(displayName) {
-    try {
-      // 1. Input Validation
-      if (!isValidUsername(displayName)) return;
+    // 1. Input Validation
+    if (!isValidUsername(displayName)) return;
 
-      // 2. Check if username already exists
-      const existingUser = await getUserByUsername(displayName);
-      if (existingUser) {
-        notify("Username already taken", "top-right", "error");
-        return;
-      }
+    // 2. Check if username already exists
+    const existingUser = await checkIfExistingUser(displayName);
+    if (existingUser) {
+      notify("Username already taken", "top-right", "error");
+      return;
+    }
 
-      notify("Valid Username", "top-right", "success");
+    dispatch({ type: "loading" });
 
-      dispatch({ type: "validUser", payload: displayName });
-    } catch (error) {
-      notify("Failed to create user", "top-right", "error");
+    // 3. Insert new user into the database
+    const { data, error } = await quiztServer
+      .from("users")
+      .insert([
+        {
+          user_name: displayName,
+          quiz_id: quizId,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      dispatch({ type: "insertUser/failed" });
+    }
+    if (data) {
+      dispatch({
+        type: "insertUser/succes",
+        payload: { user: data, username: displayName },
+      });
     }
   }
 
@@ -194,71 +216,21 @@ function UserProvider({ children }) {
     notify("Should be more than three characters", "top-right", "warn");
   }
 
-  // Function to get user by username
-  async function getUserByUsername(username) {
+  // Function to get users by quiz id then check if the username is taken
+  async function checkIfExistingUser(username) {
     const { data, error } = await quiztServer
       .from("users")
       .select()
-      .eq("user_name", username);
+      .match({ quiz_id: quizId, user_name: username });
     if (error) {
       throw error;
     }
-    return data ? data[0] : null;
-  }
-
-  // useEffect(() => {
-  //   async function fetchQuiz() {
-  //     if (quizStatus === "fetching") {
-  //       // const { data, error } = await quiztServer
-  //       //   .from("quizzes")
-  //       //   .select()
-  //       //   .eq("quiz_id", quizId)
-  //       //   .single();
-  //       // if (error) {
-  //       //   console.log(error);
-  //       //   if (error.code === "22P02")
-  //       //     notify("Should be a number", "top-right", "error");
-  //       //   if (error.code === "PGRST116")
-  //       //     notify("Wrong quiz ID", "top-right", "error");
-  //       //   dispatch({ type: "fetchQuiz/failed" });
-  //       // }
-  //       // if (data) {
-  //       //   dispatch({
-  //       //     type: "fetchQuiz/received",
-  //       //     payload: data,
-  //       //   });
-  //       //   notify("Correct Quiz ID", "top-right", "success");
-  //       // }
-  //     }
-  //   }
-  //   if (quizStatus === "fetching") {
-  //     fetchQuiz();
-  //   }
-  // }, [notify, quizId, quizStatus, quiztServer]);
-
-  useEffect(() => {
-    async function createNewUser() {
-      // Insert new user into the database
-      const { data, error } = await quiztServer
-        .from("users")
-        .insert([
-          {
-            user_name: username,
-            quiz_id: quizId,
-          },
-        ])
-        .select()
-        .single();
-
-      if (error) {
-        throw error;
-      }
-      if (data) {
-        dispatch({ type: "fetchUser/succes", payload: data });
-      }
+    // return data ? data[0] : null;
+    if (data) {
+      if (data.length === 1) return true;
+      if (data.length === 0) return false;
     }
-    createNewUser();
-  }, [quizId, quiztServer, username]);
+  }
 
   //fetching the questions
   function handleUserStartQuiz() {
@@ -324,23 +296,23 @@ function UserProvider({ children }) {
   }
 
   // update cloud user score
-  useEffect(() => {
-    async function updateUserScore() {
-      const { data, error } = await quiztServer
-        .from("users")
-        .update({ score: userScore })
-        .eq("user_name", username)
-        .select();
+  // useEffect(() => {
+  //   async function updateUserScore() {
+  //     const { data, error } = await quiztServer
+  //       .from("users")
+  //       .update({ score: userScore })
+  //       .eq("user_name", username)
+  //       .select();
 
-      if (error) {
-        throw error;
-      }
-      if (data) {
-        dispatch({ type: "fetchUser/succes", payload: data[0] });
-      }
-    }
-    updateUserScore();
-  }, [quiztServer, userScore, username]);
+  //     if (error) {
+  //       throw error;
+  //     }
+  //     if (data) {
+  //       dispatch({ type: "fetchUser/succes", payload: data[0] });
+  //     }
+  //   }
+  //   updateUserScore();
+  // }, [quiztServer, userScore, username]);
 
   function handleAttemptAnotherQuiz() {
     dispatch({ type: "joinAnotherQuiz" });
@@ -349,8 +321,7 @@ function UserProvider({ children }) {
   return (
     <UserContext.Provider
       value={{
-        loadingStatus,
-        isValidUser,
+        status,
         isUser,
         user,
         userScore,

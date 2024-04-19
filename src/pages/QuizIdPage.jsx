@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 
 function QuizId() {
   const [id, setId] = useState("");
-  const { loadingStatus, checkQuizId } = useUser();
+  const { status, checkQuizId } = useUser();
 
   const navigate = useNavigate();
 
@@ -18,10 +18,10 @@ function QuizId() {
   }
 
   useEffect(() => {
-    if (loadingStatus === "loaded") navigate("/new-user", { replace: true });
-  }, [loadingStatus, navigate]);
+    if (status === "quizLoaded") navigate("/new-user", { replace: true });
+  }, [status, navigate]);
 
-  if (loadingStatus === "loading") return <Loader>Entering the quiz...</Loader>;
+  if (status === "loading") return <Loader>Entering the quiz...</Loader>;
 
   return (
     <>
