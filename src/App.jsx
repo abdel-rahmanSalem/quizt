@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
-// import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
-// import ProtectedQuestionsRoute from "./protectedRoutes/ProtectedQuestionsRoute";
+import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
 import "react-toastify/dist/ReactToastify.css";
 import Global from "./components/GlobalUser";
 import PageNotFound from "./pages/PageNotFound";
@@ -14,6 +12,7 @@ import Quiz from "./pages/QuizPage";
 import Questions from "./pages/QuestionPage";
 import SummaryPage from "./pages/SummaryPage";
 import { HosterProvider } from "./contexts/HosterContext";
+import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
 
 function App() {
   return (
@@ -28,14 +27,6 @@ function App() {
           }
         ></Route>
         <Route
-          path="/new-user"
-          element={
-            <Global style={"flex-col"}>
-              <Username />
-            </Global>
-          }
-        ></Route>
-        <Route
           path="/quiz-id"
           element={
             <Global style={"flex-col"}>
@@ -44,10 +35,22 @@ function App() {
           }
         ></Route>
         <Route
+          path="/new-user"
+          element={
+            <Global style={"flex-col"}>
+              <ProtectedQuizRoute>
+                <Username />
+              </ProtectedQuizRoute>
+            </Global>
+          }
+        ></Route>
+        <Route
           path="quiz"
           element={
             <Global>
-              <Quiz />
+              <ProtectedUserRoute>
+                <Quiz />
+              </ProtectedUserRoute>
             </Global>
           }
         ></Route>
@@ -55,7 +58,9 @@ function App() {
           path="/quiz/questions"
           element={
             <Global>
-              <Questions />
+              <ProtectedUserRoute>
+                <Questions />
+              </ProtectedUserRoute>
             </Global>
           }
         ></Route>
@@ -63,7 +68,9 @@ function App() {
           path="/quiz/summary"
           element={
             <Global>
-              <SummaryPage />
+              <ProtectedUserRoute>
+                <SummaryPage />
+              </ProtectedUserRoute>
             </Global>
           }
         ></Route>
