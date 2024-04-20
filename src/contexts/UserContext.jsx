@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import PropTypes from "prop-types";
 
 import { useGlobal } from "./GlobalContext";
@@ -56,18 +56,16 @@ function reducer(state, action) {
         status: "userfailed",
         user: {},
       };
-    case "fetchQuestions":
-      return { ...state, questionsStatus: "fetching" };
     case "fetchQuestions/received":
       return {
         ...state,
-        questionsStatus: "Loaded",
+        status: "questionsLoaded",
         questions: action.payload,
       };
     case "fetchQuestions/failed":
       return {
         ...state,
-        questionsStatus: "failed",
+        status: "questionsFailed",
         questions: [],
       };
     case "newAnswer":
@@ -233,34 +231,53 @@ function UserProvider({ children }) {
   }
 
   //fetching the questions
-  function handleUserStartQuiz() {
-    dispatch({ type: "fetchQuestions" });
-  }
-  useEffect(() => {
-    async function fetchQuestions() {
-      if (questionsStatus === "fetching") {
-        const { data, error } = await quiztServer
-          .from("questions")
-          .select()
-          .eq("quiz_id", quizId);
+  async function handleUserStartQuiz() {
+    dispatch({ type: "loading" });
 
-        if (error) {
-          const message = "Unexpected error occurred";
-          dispatch({ type: "fetchQuestions/failed" });
-          notify(message, "top-right", "error");
-        }
+    const { data, error } = await quiztServer
+      .from("questions")
+      .select()
+      .eq("quiz_id", quizId);
 
-        if (data) {
-          dispatch({
-            type: "fetchQuestions/received",
-            payload: data,
-          });
-          notify("Quiz Start", "top-right", "info");
-        }
-      }
+    if (error) {
+      const message = "Unexpected error occurred";
+      dispatch({ type: "fetchQuestions/failed" });
+      notify(message, "top-right", "error");
     }
-    fetchQuestions();
-  }, [notify, questionsStatus, quizId, quiztServer]);
+
+    if (data) {
+      dispatch({
+        type: "fetchQuestions/received",
+        payload: data,
+      });
+      notify("Quiz Start", "top-right", "info");
+    }
+  }
+  // useEffect(() => {
+  //   async function fetchQuestions() {
+  //     if (questionsStatus === "fetching") {
+  //       const { data, error } = await quiztServer
+  //         .from("questions")
+  //         .select()
+  //         .eq("quiz_id", quizId);
+
+  //       if (error) {
+  //         const message = "Unexpected error occurred";
+  //         dispatch({ type: "fetchQuestions/failed" });
+  //         notify(message, "top-right", "error");
+  //       }
+
+  //       if (data) {
+  //         dispatch({
+  //           type: "fetchQuestions/received",
+  //           payload: data,
+  //         });
+  //         notify("Quiz Start", "top-right", "info");
+  //       }
+  //     }
+  //   }
+  //   fetchQuestions();
+  // }, [notify, questionsStatus, quizId, quiztServer]);
 
   function tick() {
     dispatch({ type: "tick" });
