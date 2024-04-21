@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 
 import { useGlobal } from "./GlobalContext";
@@ -14,7 +14,6 @@ const initialState = {
   quizId: -1,
   quiz: {},
   isQuizEnd: false,
-  questionsStatus: "unKnown",
   questions: [],
   questionsIndexor: 0,
   currentAnswer: -1,
@@ -126,7 +125,6 @@ function UserProvider({ children }) {
     userScore,
     quizId,
     quiz,
-    questionsStatus,
     questions,
     questionsIndexor,
     currentAnswer,
@@ -253,31 +251,6 @@ function UserProvider({ children }) {
       notify("Quiz Start", "top-right", "info");
     }
   }
-  // useEffect(() => {
-  //   async function fetchQuestions() {
-  //     if (questionsStatus === "fetching") {
-  //       const { data, error } = await quiztServer
-  //         .from("questions")
-  //         .select()
-  //         .eq("quiz_id", quizId);
-
-  //       if (error) {
-  //         const message = "Unexpected error occurred";
-  //         dispatch({ type: "fetchQuestions/failed" });
-  //         notify(message, "top-right", "error");
-  //       }
-
-  //       if (data) {
-  //         dispatch({
-  //           type: "fetchQuestions/received",
-  //           payload: data,
-  //         });
-  //         notify("Quiz Start", "top-right", "info");
-  //       }
-  //     }
-  //   }
-  //   fetchQuestions();
-  // }, [notify, questionsStatus, quizId, quiztServer]);
 
   function tick() {
     dispatch({ type: "tick" });
@@ -313,23 +286,23 @@ function UserProvider({ children }) {
   }
 
   // update cloud user score
-  // useEffect(() => {
-  //   async function updateUserScore() {
-  //     const { data, error } = await quiztServer
-  //       .from("users")
-  //       .update({ score: userScore })
-  //       .eq("user_name", username)
-  //       .select();
+  useEffect(() => {
+    async function updateUserScore() {
+      const { data, error } = await quiztServer
+        .from("users")
+        .update({ score: userScore })
+        .eq("user_name", username)
+        .select();
 
-  //     if (error) {
-  //       throw error;
-  //     }
-  //     if (data) {
-  //       dispatch({ type: "fetchUser/succes", payload: data[0] });
-  //     }
-  //   }
-  //   updateUserScore();
-  // }, [quiztServer, userScore, username]);
+      if (error) {
+        throw error;
+      }
+      if (data) {
+        dispatch({ type: "fetchUser/succes", payload: data[0] });
+      }
+    }
+    updateUserScore();
+  }, [quiztServer, userScore, username]);
 
   function handleAttemptAnotherQuiz() {
     dispatch({ type: "joinAnotherQuiz" });
@@ -345,7 +318,6 @@ function UserProvider({ children }) {
         username,
         quizId,
         quiz,
-        questionsStatus,
         questions,
         questionsIndexor,
         currentQuestion,
