@@ -32,7 +32,7 @@ function reducer(state, action) {
         status: "quizLoaded",
         quiz: action.payload.quiz,
         quizId: action.payload.quizId,
-        secondsRemaining: Number(action.payload.time * 60),
+        secondsRemaining: Number(action.payload.quiz.time * 60),
       };
     case "fetchQuiz/failed":
       return {
