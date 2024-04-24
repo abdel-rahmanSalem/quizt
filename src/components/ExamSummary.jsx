@@ -2,19 +2,15 @@ import { useUser } from "../contexts/UserContext";
 import Rank from "../components/Rank";
 import CompletionMessage from "../components/CompletionMessage";
 import Percentage from "../components/Percentage";
-import CorrectAnswerToast from "./CorrectedAnswerToast";
-import AnswersSum from "./AnswersSum";
 function ExamSummary() {
-  const { quiz, user} = useUser();
+  const { quiz, user } = useUser();
   const { max_points } = quiz;
   const { score } = user;
   const percentage = (score / max_points) * 100;
 
   return (
     <>
-      <CorrectAnswerToast />
       <CompletionMessage percentage={percentage} />
-      <AnswersSum />
       <p className="mb-4">
         Final Score: {score} / {max_points}
       </p>
