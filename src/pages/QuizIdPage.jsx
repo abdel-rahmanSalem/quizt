@@ -25,7 +25,7 @@ function QuizId() {
 
   return (
     <>
-      <HeaderText>Enter your quiz ID: </HeaderText>
+      <HeaderText>Enter your quiz ID:</HeaderText>
       <form className="flex gap-2" onSubmit={handleSubmit}>
         <input
           autoFocus
