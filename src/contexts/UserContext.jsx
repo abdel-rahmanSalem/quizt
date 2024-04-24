@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import PropTypes from "prop-types";
 
 import { useGlobal } from "./GlobalContext";
@@ -6,16 +6,13 @@ import { useGlobal } from "./GlobalContext";
 const UserContext = createContext();
 
 const initialState = {
+  status: "unKnown",
   username: "",
-  isValidUser: false,
   isUser: false,
   user: {},
-  userScore: 0,
-  quizStatus: "unKnown",
   quizId: -1,
   quiz: {},
   isQuizEnd: false,
-  questionsStatus: "unKnown",
   questions: [],
   questionsIndexor: 0,
   currentAnswer: -1,
@@ -24,37 +21,49 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "validUser":
-      return { ...state, isValidUser: true, username: action.payload };
-    case "fetchUser/succes":
-      return { ...state, isUser: true, user: action.payload };
-    case "fetchQuiz":
+    case "loading":
       return {
         ...state,
-        quizStatus: "fetching",
-        quizId: action.payload,
+        status: "loading",
       };
     case "fetchQuiz/received":
       return {
         ...state,
-        quizStatus: "loaded",
-        quiz: action.payload,
-        secondsRemaining: Number(action.payload.time * 60),
+        status: "quizLoaded",
+        quiz: action.payload.quiz,
+        quizId: action.payload.quizId,
+        secondsRemaining: Number(action.payload.quiz.time * 60),
       };
     case "fetchQuiz/failed":
-      return { ...state, quizStatus: "failed", quiz: {} };
-    case "fetchQuestions":
-      return { ...state, questionsStatus: "fetching" };
+      return {
+        ...state,
+        status: "quizFailed",
+        quiz: {},
+      };
+    case "insertUser/succes":
+      return {
+        ...state,
+        status: "userLoaded",
+        isUser: true,
+        user: action.payload.user,
+        username: action.payload.username,
+      };
+    case "insertUser/failed":
+      return {
+        ...state,
+        status: "userfailed",
+        user: {},
+      };
     case "fetchQuestions/received":
       return {
         ...state,
-        questionsStatus: "Loaded",
+        status: "questionsLoaded",
         questions: action.payload,
       };
     case "fetchQuestions/failed":
       return {
         ...state,
-        questionsStatus: "failed",
+        status: "questionsFailed",
         questions: [],
       };
     case "newAnswer":
@@ -62,34 +71,21 @@ function reducer(state, action) {
         ...state,
         currentAnswer: action.payload,
       };
-    case "correctAnswer":
-      return {
-        ...state,
-        userScore: state.userScore + action.payload,
-        currentAnswer: -1,
-        questionsIndexor: state.questionsIndexor + 1,
-      };
-    case "wrongAnswer":
+    case "nextQuestion":
       return {
         ...state,
         currentAnswer: -1,
         questionsIndexor: state.questionsIndexor + 1,
       };
-    case "correctFinalAnswer":
-      return {
-        ...state,
-        userScore: state.userScore + action.payload,
-        currentAnswer: -1,
-        questionsIndexor: 0,
-        isQuizEnd: true,
-      };
-    case "wrongFinalAnswer":
+    case "finalQuestion":
       return {
         ...state,
         currentAnswer: -1,
         questionsIndexor: 0,
         isQuizEnd: true,
       };
+    case "updateUser/succes":
+      return { ...state, user: action.payload };
     case "joinAnotherQuiz":
       return {
         ...initialState,
@@ -108,15 +104,12 @@ function UserProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
+    status,
     username,
-    isValidUser,
     isUser,
     user,
-    userScore,
-    quizStatus,
     quizId,
     quiz,
-    questionsStatus,
     questions,
     questionsIndexor,
     currentAnswer,
@@ -126,24 +119,69 @@ function UserProvider({ children }) {
 
   const currentQuestion = questions.at(questionsIndexor);
 
+  // fetching the quiz by id
+  async function checkQuizId(id) {
+    if (id.trim().length < 4) {
+      notify("Should be more than three characters", "top-right", "warn");
+      return;
+    }
+    dispatch({ type: "loading" });
+    const { data, error } = await quiztServer
+      .from("quizzes")
+      .select()
+      .eq("quiz_id", id)
+      .single();
+
+    if (error) {
+      if (error.code === "22P02")
+        notify("Should be a number", "top-right", "error");
+      if (error.code === "PGRST116")
+        notify("Wrong quiz ID", "top-right", "error");
+      dispatch({ type: "fetchQuiz/failed" });
+    }
+
+    if (data) {
+      dispatch({
+        type: "fetchQuiz/received",
+        payload: { quiz: data, quizId: id },
+      });
+      notify("Correct Quiz ID", "top-right", "success");
+    }
+  }
   // handle newusers
   async function submitNewUser(displayName) {
-    try {
-      // 1. Input Validation
-      if (!isValidUsername(displayName)) return;
+    // 1. Input Validation
+    if (!isValidUsername(displayName)) return;
 
-      // 2. Check if username already exists
-      const existingUser = await getUserByUsername(displayName);
-      if (existingUser) {
-        notify("Username already taken", "top-right", "error");
-        return;
-      }
+    // 2. Check if username already exists
+    const existingUser = await checkIfExistingUser(displayName);
+    if (existingUser) {
+      notify("Username already taken", "top-right", "error");
+      return;
+    }
 
-      notify("Valid Username", "top-right", "success");
+    dispatch({ type: "loading" });
 
-      dispatch({ type: "validUser", payload: displayName });
-    } catch (error) {
-      notify("Failed to create user", "top-right", "error");
+    // 3. Insert new user into the database
+    const { data, error } = await quiztServer
+      .from("users")
+      .insert([
+        {
+          user_name: displayName,
+          quiz_id: quizId,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      dispatch({ type: "insertUser/failed" });
+    }
+    if (data) {
+      dispatch({
+        type: "insertUser/succes",
+        payload: { user: data, username: displayName },
+      });
     }
   }
 
@@ -159,115 +197,45 @@ function UserProvider({ children }) {
     notify("Should be more than three characters", "top-right", "warn");
   }
 
-  // Function to get user by username
-  async function getUserByUsername(username) {
+  // Function to get users by quiz id then check if the username is taken
+  async function checkIfExistingUser(username) {
     const { data, error } = await quiztServer
       .from("users")
       .select()
-      .eq("user_name", username);
+      .match({ quiz_id: quizId, user_name: username });
     if (error) {
       throw error;
     }
-    return data ? data[0] : null;
+    // return data ? data[0] : null;
+    if (data) {
+      if (data.length === 1) return true;
+      if (data.length === 0) return false;
+    }
   }
-
-  // fetching the quiz by id
-  function checkQuizId(id) {
-    if (id.length >= 0 && id.length < 4) {
-      notify("Should be more than three characters", "top-right", "warn");
-      return;
-    }
-    dispatch({ type: "fetchQuiz", payload: Number(id) });
-  }
-  useEffect(() => {
-    async function fetchQuiz() {
-      if (quizStatus === "fetching") {
-        const { data, error } = await quiztServer
-          .from("quizzes")
-          .select()
-          .eq("quiz_id", quizId)
-          .single();
-
-        if (error) {
-          console.log(error);
-          if (error.code === "22P02")
-            notify("Should be a number", "top-right", "error");
-          if (error.code === "PGRST116")
-            notify("Wrong quiz ID", "top-right", "error");
-          dispatch({ type: "fetchQuiz/failed" });
-        }
-
-        if (data) {
-          dispatch({
-            type: "fetchQuiz/received",
-            payload: data,
-          });
-          notify("Correct Quiz ID", "top-right", "success");
-        }
-      }
-    }
-    if (quizStatus === "fetching") {
-      fetchQuiz();
-    }
-  }, [notify, quizId, quizStatus, quiztServer]);
-
-  useEffect(() => {
-    async function createNewUser() {
-      // Insert new user into the database
-      if (quizStatus === "loaded") {
-        const { data, error } = await quiztServer
-          .from("users")
-          .insert([
-            {
-              user_name: username,
-              quiz_id: quizId,
-            },
-          ])
-          .select()
-          .single();
-
-        if (error) {
-          throw error;
-        }
-        if (data) {
-          dispatch({ type: "fetchUser/succes", payload: data });
-        }
-      }
-    }
-    if (quizStatus === "loaded") {
-      createNewUser();
-    }
-  }, [quizId, quizStatus, quiztServer, username]);
 
   //fetching the questions
-  function handleUserStartQuiz() {
-    dispatch({ type: "fetchQuestions" });
-  }
-  useEffect(() => {
-    async function fetchQuestions() {
-      if (questionsStatus === "fetching") {
-        const { data, error } = await quiztServer
-          .from("questions")
-          .select()
-          .eq("quiz_id", quizId);
+  async function handleUserStartQuiz() {
+    dispatch({ type: "loading" });
 
-        if (error) {
-          const message = "Unexpected error occurred";
-          dispatch({ type: "fetchQuestions/failed" });
-          notify(message, "top-right", "error");
-        }
+    const { data, error } = await quiztServer
+      .from("questions")
+      .select()
+      .eq("quiz_id", quizId);
 
-        if (data) {
-          dispatch({
-            type: "fetchQuestions/received",
-            payload: data,
-          });
-          notify("Quiz Start", "top-right", "info");
-        }
-      }
+    if (error) {
+      const message = "Unexpected error occurred";
+      dispatch({ type: "fetchQuestions/failed" });
+      notify(message, "top-right", "error");
     }
-    fetchQuestions();
-  }, [notify, questionsStatus, quizId, quiztServer]);
+
+    if (data) {
+      dispatch({
+        type: "fetchQuestions/received",
+        payload: data,
+      });
+      notify("Quiz Start", "top-right", "info");
+    }
+  }
 
   function tick() {
     dispatch({ type: "tick" });
@@ -278,48 +246,40 @@ function UserProvider({ children }) {
     dispatch({ type: "newAnswer", payload: optionIndex });
   }
 
-  function handleNextQuestion() {
+  // update cloud user score
+  async function updateUserScore(questionPoints) {
+    const { data, error } = await quiztServer
+      .from("users")
+      .update({ score: user.score + questionPoints })
+      .eq("user_name", username)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+    if (data) {
+      dispatch({ type: "updateUser/succes", payload: data });
+    }
+  }
+
+  async function handleNextQuestion() {
     if (currentAnswer === -1) {
       notify("Answer the Question Please :)", "top-right", "warn");
       return;
     }
 
+    if (currentAnswer === currentQuestion.correct_option) {
+      await updateUserScore(currentQuestion.points);
+    }
+
     if (questionsIndexor === questions.length - 1) {
-      if (currentAnswer === currentQuestion.correct_option) {
-        dispatch({
-          type: "correctFinalAnswer",
-          payload: currentQuestion.points,
-        });
-        return;
-      } else {
-        dispatch({ type: "wrongFinalAnswer" });
-        return;
-      }
+      dispatch({ type: "finalQuestion" });
+      return;
     }
 
-    if (currentAnswer === currentQuestion.correct_option)
-      dispatch({ type: "correctAnswer", payload: currentQuestion.points });
-    else dispatch({ type: "wrongAnswer" });
+    dispatch({ type: "nextQuestion" });
   }
-
-  // update cloud user score
-  useEffect(() => {
-    async function updateUserScore() {
-      const { data, error } = await quiztServer
-        .from("users")
-        .update({ score: userScore })
-        .eq("user_name", username)
-        .select();
-
-      if (error) {
-        throw error;
-      }
-      if (data) {
-        dispatch({ type: "fetchUser/succes", payload: data[0] });
-      }
-    }
-    updateUserScore();
-  }, [quiztServer, userScore, username]);
 
   function handleAttemptAnotherQuiz() {
     dispatch({ type: "joinAnotherQuiz" });
@@ -328,15 +288,12 @@ function UserProvider({ children }) {
   return (
     <UserContext.Provider
       value={{
-        isValidUser,
+        status,
         isUser,
         user,
-        userScore,
         username,
         quizId,
-        quizStatus,
         quiz,
-        questionsStatus,
         questions,
         questionsIndexor,
         currentQuestion,

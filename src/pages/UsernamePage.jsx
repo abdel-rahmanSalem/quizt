@@ -1,12 +1,13 @@
 import HeaderText from "../components/HeaderText";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import Loader from "../components/Loader";
 import { useUser } from "../contexts/UserContext";
 import { useEffect, useState } from "react";
 
 function Username() {
   const [displayName, setDisplayName] = useState("");
-  const { submitNewUser, isValidUser } = useUser();
+  const { submitNewUser, status } = useUser();
 
   const navigate = useNavigate();
 
@@ -17,8 +18,10 @@ function Username() {
   }
 
   useEffect(() => {
-    if (isValidUser) navigate("/quiz-id", { replace: true });
-  }, [isValidUser, navigate]);
+    if (status === "userLoaded") navigate("/quiz", { replace: true });
+  }, [status, navigate]);
+
+  if (status === "loading") return <Loader>Entering the quiz...</Loader>;
 
   return (
     <>
