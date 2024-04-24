@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import PropTypes from "prop-types";
 
 import { useGlobal } from "./GlobalContext";
@@ -100,6 +100,8 @@ function reducer(state, action) {
         questionsIndexor: 0,
         isQuizEnd: true,
       };
+    case "updateUser/succes":
+      return { ...state, user: action.payload };
     case "joinAnotherQuiz":
       return {
         ...initialState,
@@ -261,7 +263,24 @@ function UserProvider({ children }) {
     dispatch({ type: "newAnswer", payload: optionIndex });
   }
 
-  function handleNextQuestion() {
+  // update cloud user score
+  async function updateUserScore() {
+    const { data, error } = await quiztServer
+      .from("users")
+      .update({ score: state.userScore })
+      .eq("user_name", username)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+    if (data) {
+      dispatch({ type: "updateUser/succes", payload: data });
+    }
+  }
+
+  async function handleNextQuestion() {
     if (currentAnswer === -1) {
       notify("Answer the Question Please :)", "top-right", "warn");
       return;
@@ -284,25 +303,6 @@ function UserProvider({ children }) {
       dispatch({ type: "correctAnswer", payload: currentQuestion.points });
     else dispatch({ type: "wrongAnswer" });
   }
-
-  // update cloud user score
-  useEffect(() => {
-    async function updateUserScore() {
-      const { data, error } = await quiztServer
-        .from("users")
-        .update({ score: userScore })
-        .eq("user_name", username)
-        .select();
-
-      if (error) {
-        throw error;
-      }
-      if (data) {
-        dispatch({ type: "fetchUser/succes", payload: data[0] });
-      }
-    }
-    updateUserScore();
-  }, [quiztServer, userScore, username]);
 
   function handleAttemptAnotherQuiz() {
     dispatch({ type: "joinAnotherQuiz" });
@@ -332,6 +332,7 @@ function UserProvider({ children }) {
         handleNewAnswer,
         handleNextQuestion,
         handleAttemptAnotherQuiz,
+        updateUserScore,
       }}
     >
       {children}
