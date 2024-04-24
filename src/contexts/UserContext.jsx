@@ -17,6 +17,8 @@ const initialState = {
   questionsIndexor: 0,
   currentAnswer: -1,
   secondsRemaining: -1,
+  corrected: [],
+  ansTracker: []
 };
 
 function reducer(state, action) {
@@ -85,7 +87,7 @@ function reducer(state, action) {
         isQuizEnd: true,
       };
     case "updateUser/succes":
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload , ansTracker: [...state.ansTracker, "correct"]};
     case "joinAnotherQuiz":
       return {
         ...initialState,
@@ -96,6 +98,12 @@ function reducer(state, action) {
         secondsRemaining: state.secondsRemaining - 1,
         isQuizEnd: state.secondsRemaining === 0 ? true : state.isQuizEnd,
       };
+      case "correctWrongAnswers":
+        return {
+          ...state, 
+          corrected: [...state.corrected, action.payload],
+          ansTracker: [...state.ansTracker, "incorrect"]
+        }
   }
 }
 
@@ -115,6 +123,8 @@ function UserProvider({ children }) {
     currentAnswer,
     isQuizEnd,
     secondsRemaining,
+    corrected,
+    ansTracker
   } = state;
 
   const currentQuestion = questions.at(questionsIndexor);
@@ -250,7 +260,7 @@ function UserProvider({ children }) {
   async function updateUserScore(questionPoints) {
     const { data, error } = await quiztServer
       .from("users")
-      .update({ score: user.score + questionPoints })
+      .update({ score: user.score + questionPoints, num_correct_questions: user.num_correct_questions + 1 })
       .eq("user_name", username)
       .select()
       .single();
@@ -271,6 +281,8 @@ function UserProvider({ children }) {
 
     if (currentAnswer === currentQuestion.correct_option) {
       await updateUserScore(currentQuestion.points);
+    }else{
+      await dispatch({type: "correctWrongAnswers", payload: {index: questionsIndexor , answer: currentQuestion.options[currentQuestion.correct_option]}})
     }
 
     if (questionsIndexor === questions.length - 1) {
@@ -308,6 +320,8 @@ function UserProvider({ children }) {
         handleNewAnswer,
         handleNextQuestion,
         handleAttemptAnotherQuiz,
+        corrected,
+        ansTracker
       }}
     >
       {children}
