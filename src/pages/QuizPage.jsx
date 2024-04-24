@@ -1,13 +1,21 @@
+import { useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 
 function Quiz() {
-  const { quiz, handleUserStartQuiz, questionsStatus } = useUser();
+  const { quiz, handleUserStartQuiz, status } = useUser();
   const { title, host_name, max_points, num_questions, time, is_start } = quiz;
 
-  if (questionsStatus === "fetching")
-    return <Loader>Starting the quiz...</Loader>;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (status === "questionsLoaded")
+      navigate("/quiz/questions", { replace: true });
+  }, [status, navigate]);
+
+  if (status === "loading") return <Loader>Starting the quiz...</Loader>;
   return (
     <div className="max-w-xl mx-auto bg-gray-800 shadow-md rounded-lg overflow-hidden">
       <div className="p-6">
