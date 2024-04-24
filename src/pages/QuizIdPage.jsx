@@ -7,13 +7,9 @@ import Loader from "../components/Loader";
 
 function QuizId() {
   const [id, setId] = useState("");
-  const { isValidUser, username, checkQuizId, quizStatus } = useUser();
+  const { status, checkQuizId } = useUser();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isValidUser) navigate("/");
-  }, [isValidUser, navigate]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,14 +18,14 @@ function QuizId() {
   }
 
   useEffect(() => {
-    if (quizStatus === "loaded") navigate("/quiz", { replace: true });
-  }, [quizStatus, navigate]);
+    if (status === "quizLoaded") navigate("/new-user", { replace: true });
+  }, [status, navigate]);
 
-  if (quizStatus === "fetching") return <Loader>Joining the quiz...</Loader>;
+  if (status === "loading") return <Loader>Entering the quiz...</Loader>;
 
   return (
     <>
-      <HeaderText>👋 Welcome {username}, Enter your quiz ID: </HeaderText>
+      <HeaderText>Enter your quiz ID: </HeaderText>
       <form className="flex gap-2" onSubmit={handleSubmit}>
         <input
           autoFocus

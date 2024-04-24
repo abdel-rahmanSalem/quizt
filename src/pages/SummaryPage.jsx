@@ -1,12 +1,19 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import Button from "../components/Button";
 import ExamSummary from "../components/ExamSummary";
 import { IoShareOutline } from "react-icons/io5";
 
 function SummaryPage() {
-  const { username, quiz, notify, handleAttemptAnotherQuiz } = useUser();
+  const { username, quiz, notify, handleAttemptAnotherQuiz, isQuizEnd } =
+    useUser();
   const { title } = quiz;
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isQuizEnd) navigate("/quiz/questions");
+  }, [isQuizEnd, navigate]);
   return (
     <div className="bg-gray-900 text-white p-8 rounded-lg shadow-md">
       <h1 className="text-2xl md:text-3xl font-bold mb-6">
