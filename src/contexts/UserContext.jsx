@@ -10,7 +10,6 @@ const initialState = {
   username: "",
   isUser: false,
   user: {},
-  userScore: 0,
   quizId: -1,
   quiz: {},
   isQuizEnd: false,
@@ -72,28 +71,13 @@ function reducer(state, action) {
         ...state,
         currentAnswer: action.payload,
       };
-    case "correctAnswer":
-      return {
-        ...state,
-        userScore: state.userScore + action.payload,
-        currentAnswer: -1,
-        questionsIndexor: state.questionsIndexor + 1,
-      };
-    case "wrongAnswer":
+    case "nextQuestion":
       return {
         ...state,
         currentAnswer: -1,
         questionsIndexor: state.questionsIndexor + 1,
       };
-    case "correctFinalAnswer":
-      return {
-        ...state,
-        userScore: state.userScore + action.payload,
-        currentAnswer: -1,
-        questionsIndexor: 0,
-        isQuizEnd: true,
-      };
-    case "wrongFinalAnswer":
+    case "finalQuestion":
       return {
         ...state,
         currentAnswer: -1,
@@ -124,7 +108,6 @@ function UserProvider({ children }) {
     username,
     isUser,
     user,
-    userScore,
     quizId,
     quiz,
     questions,
@@ -264,10 +247,10 @@ function UserProvider({ children }) {
   }
 
   // update cloud user score
-  async function updateUserScore() {
+  async function updateUserScore(questionPoints) {
     const { data, error } = await quiztServer
       .from("users")
-      .update({ score: state.userScore })
+      .update({ score: user.score + questionPoints })
       .eq("user_name", username)
       .select()
       .single();
@@ -286,22 +269,16 @@ function UserProvider({ children }) {
       return;
     }
 
-    if (questionsIndexor === questions.length - 1) {
-      if (currentAnswer === currentQuestion.correct_option) {
-        dispatch({
-          type: "correctFinalAnswer",
-          payload: currentQuestion.points,
-        });
-        return;
-      } else {
-        dispatch({ type: "wrongFinalAnswer" });
-        return;
-      }
+    if (currentAnswer === currentQuestion.correct_option) {
+      await updateUserScore(currentQuestion.points);
     }
 
-    if (currentAnswer === currentQuestion.correct_option)
-      dispatch({ type: "correctAnswer", payload: currentQuestion.points });
-    else dispatch({ type: "wrongAnswer" });
+    if (questionsIndexor === questions.length - 1) {
+      dispatch({ type: "finalQuestion" });
+      return;
+    }
+
+    dispatch({ type: "nextQuestion" });
   }
 
   function handleAttemptAnotherQuiz() {
@@ -314,7 +291,6 @@ function UserProvider({ children }) {
         status,
         isUser,
         user,
-        userScore,
         username,
         quizId,
         quiz,
@@ -332,7 +308,6 @@ function UserProvider({ children }) {
         handleNewAnswer,
         handleNextQuestion,
         handleAttemptAnotherQuiz,
-        updateUserScore,
       }}
     >
       {children}
