@@ -11,7 +11,7 @@ function Home() {
     <>
       <HeaderText>Hi there, Welcome to our Quiz Application</HeaderText>
       <div className="flex justify-between items-center gap-8">
-        <Link to="/quiz-id">
+        <Link to="/new-user">
           <Button type="primary">Join a Quiz</Button>
         </Link>
         <Link>
