@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa"; // Import social icons
+import { MdLeaderboard } from "react-icons/md";
 
 function Navbar() {
   return (
@@ -23,6 +24,12 @@ function Navbar() {
               className="text-gray-300 text-lg hover:text-white"
             >
               Join
+            </Link>
+            <Link
+              to="/leaderboard"
+              className="text-gray-300 text-lg hover:text-white"
+            >
+              <MdLeaderboard className="text-xl"/>
             </Link>
             <div className="border-l border-gray-600 h-6"></div>{" "}
             {/* Vertical line */}
