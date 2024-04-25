@@ -23,7 +23,7 @@ const CorrectedAnswers = () => {
             }
         </button>
         {
-            showCorrected ? 
+            showCorrected &&
             <div className="p-2 max-h-28 overflow-y-auto">
                 <ul className="flex flex-col gap-4">
                 {
@@ -34,9 +34,6 @@ const CorrectedAnswers = () => {
                     </li>))
                 }
                 </ul>
-            </div>
-                :
-            <div>
             </div>
         }
       </div>
