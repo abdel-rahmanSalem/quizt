@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 function Button({ children, type, onClick }) {
-  const primaryClasses = "bg-blue-600 hover:bg-blue-700";
+  const primaryClasses = "bg-blue-600 hover:bg-blue-700 ";
   const secondaryClasses = "bg-green-600 hover:bg-green-700";
 
   const commonClasses =

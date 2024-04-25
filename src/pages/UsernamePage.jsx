@@ -27,7 +27,7 @@ function Username() {
     <>
       <HeaderText>What is your name?</HeaderText>
 
-      <form className="flex gap-2" onSubmit={handleSubmit}>
+      <form className="flex gap-2 flex-col md:flex-row" onSubmit={handleSubmit}>
         <input
           autoFocus
           maxLength="20"

@@ -282,7 +282,7 @@ function UserProvider({ children }) {
     if (currentAnswer === currentQuestion.correct_option) {
       await updateUserScore(currentQuestion.points);
     }else{
-      await dispatch({type: "correctWrongAnswers", payload: {index: questionsIndexor , answer: currentQuestion.options[currentQuestion.correct_option]}})
+      await dispatch({type: "correctWrongAnswers", payload: {index: questionsIndexor, question: currentQuestion.question , answer: currentQuestion.options[currentQuestion.correct_option]}})
     }
 
     if (questionsIndexor === questions.length - 1) {
