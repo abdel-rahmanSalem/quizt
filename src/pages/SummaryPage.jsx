@@ -17,7 +17,7 @@ function SummaryPage() {
   }, [isQuizEnd, navigate]);
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="bg-gray-900 text-white p-8 px-2 rounded-lg shadow-md w-full">
+      <div className="bg-gray-500/10 text-white p-8 px-8 rounded-lg shadow-md w-full">
         <h1 className="text-2xl md:text-3xl font-bold mb-6">
           Welcome, {username}!
         </h1>

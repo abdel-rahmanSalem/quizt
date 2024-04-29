@@ -14,13 +14,15 @@ function Main({ children, style }) {
   }, []);
 
   return (
+  <>
     <div
-      className={`flex flex-col justify-center items-center bg-gray-900 text-white  ${style} px-4`}
+      className={`flex flex-col justify-center items-center  text-white  ${style} px-4`}
       style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
-    >
+      >
       <ToastCont />
       {children}
     </div>
+  </>
   );
 }
 Main.propTypes = {

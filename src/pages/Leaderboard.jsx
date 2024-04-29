@@ -19,6 +19,7 @@ const Leaderboard = () => {
       notify("Should be more than three characters", "top-right", "warn");
       return;
     }
+
     setIsLoading(true);
     let { data, error} = await quiztServer
     .from("users")
@@ -28,12 +29,32 @@ const Leaderboard = () => {
 
     if(error){
       notify("There was an error fetching data", "top-right", "error");
+      setIsLoading(false);
       setScores([]);
     }
 
     if(data.length === 0){
-      notify("Wrong quiz ID", "top-right", "error");
+
+      let { data: isStart, err} = await quiztServer
+      .from("quizzes")
+      .select("is_start")
+      .eq("quiz_id", id)
+      .single()
+      if(isStart){
+        if(isStart.is_start === true){
+          notify("No one joined this quiz yet", "top-right", "warn");
+        }else{
+          notify("This Quiz hasn't started yet", "top-right", "warn");
+        }
+      }else{
+        notify("Wrong quiz ID", "top-right", "error");
+      }
+      if(err ){
+        notify("There was an error fetching quiz information", "top-right", "error");
+        console.log("there was an error");
+      }
     }
+      
     if(data){
       setIsLoading(false);
       setScores(data); 
@@ -46,7 +67,7 @@ const Leaderboard = () => {
     getScores(id)
   }
 
-  if(loading) return <Loader>Loading Quiz leaderboard</Loader>
+  if(loading) return <Loader>Loading Quiz leaderboard</Loader>;
 
   return (
     <>
@@ -71,7 +92,7 @@ const Leaderboard = () => {
           </form>
         </>
           :
-         <div className="bg-gray-900  w-full max-w-screen-2xl mx-auto my-8">
+         <div className=" w-full max-w-screen-2xl mx-auto my-8">
             <HeaderText>
               <div className="flex justify-between items-end">
                 <span className="flex gap-2"><MdLeaderboard className="text-blue-500"/>LeaderBoard </span>
