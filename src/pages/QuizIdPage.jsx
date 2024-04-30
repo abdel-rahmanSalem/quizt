@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
+import DemoButton from "../components/DemoButton";
 
 function QuizId() {
   const [id, setId] = useState("");
@@ -39,17 +40,7 @@ function QuizId() {
         />
         <Button type="primary">Join</Button>
       </form>
-      <div className="flex items-center mt-12 mb-3">
-        <hr className="w-16 border-gray-300" />
-        <p className="mx-4 text-gray-500 font-semibold">OR</p>
-        <hr className="w-16 border-gray-300" />
-      </div>
-      <button
-        className="border border-green-500 text-green-500 hover:text-white hover:bg-green-500 font-semibold py-2 px-4 rounded shadow"
-        onClick={() => checkQuizId("123456")}
-      >
-        Demo
-      </button>
+      <DemoButton clickHandler={checkQuizId} />
     </>
   );
 }

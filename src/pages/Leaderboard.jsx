@@ -1,124 +1,149 @@
-import HeaderText from "../components/HeaderText"
+import HeaderText from "../components/HeaderText";
 import { MdLeaderboard } from "react-icons/md";
 import { FaTrophy } from "react-icons/fa";
 import { useGlobal } from "../contexts/GlobalContext";
-import {  useState } from "react";
+import { useState } from "react";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
+import DemoButton from "../components/DemoButton";
 
 const Leaderboard = () => {
-  const { quiztServer , notify} = useGlobal();
+  const { quiztServer, notify } = useGlobal();
   const [scores, setScores] = useState([]);
   const [id, setId] = useState("");
-  const [loading , setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState(false);
 
-  
-  async function getScores(id){
-
+  async function getScores(id) {
     if (id.trim().length < 4) {
       notify("Should be more than three characters", "top-right", "warn");
       return;
     }
 
     setIsLoading(true);
-    let { data, error} = await quiztServer
-    .from("users")
-    .select("score , user_name")
-    .eq("quiz_id", id)
-    .order('score', {ascending: false});
+    let { data, error } = await quiztServer
+      .from("users")
+      .select("score , user_name")
+      .eq("quiz_id", id)
+      .order("score", { ascending: false });
 
-    if(error){
+    if (error) {
       notify("There was an error fetching data", "top-right", "error");
       setIsLoading(false);
       setScores([]);
     }
 
-    if(data.length === 0){
-
-      let { data: isStart, err} = await quiztServer
-      .from("quizzes")
-      .select("is_start")
-      .eq("quiz_id", id)
-      .single()
-      if(isStart){
-        if(isStart.is_start === true){
+    if (data.length === 0) {
+      let { data: isStart, err } = await quiztServer
+        .from("quizzes")
+        .select("is_start")
+        .eq("quiz_id", id)
+        .single();
+      if (isStart) {
+        if (isStart.is_start === true) {
           notify("No one joined this quiz yet", "top-right", "warn");
-        }else{
+        } else {
           notify("This Quiz hasn't started yet", "top-right", "warn");
         }
-      }else{
+      } else {
         notify("Wrong quiz ID", "top-right", "error");
       }
-      if(err ){
-        notify("There was an error fetching quiz information", "top-right", "error");
+      if (err) {
+        notify(
+          "There was an error fetching quiz information",
+          "top-right",
+          "error"
+        );
         console.log("there was an error");
       }
     }
-      
-    if(data){
+
+    if (data) {
       setIsLoading(false);
-      setScores(data); 
+      setScores(data);
     }
   }
 
-
   function handleSubmit(e) {
     e.preventDefault();
-    getScores(id)
+    getScores(id);
   }
 
-  if(loading) return <Loader>Loading Quiz leaderboard</Loader>;
+  if (loading) return <Loader>Loading Quiz leaderboard</Loader>;
 
   return (
     <>
-      {
-        scores.length == 0 ?
+      {scores.length == 0 ? (
         <>
-          <HeaderText>
-            Enter Quiz ID to show leaderboard
-          </HeaderText>
-          <form className="flex gap-2 flex-col md:flex-row " onSubmit={handleSubmit}>
-              <input
-                autoFocus
-                maxLength="20"
-                className="bg-white text-gray-800 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                name="quizId"
-                type="text"
-                placeholder="27364...."
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-              />
-              <Button type="primary">Enter</Button>
+          <HeaderText>Enter Quiz ID to show leaderboard</HeaderText>
+          <form
+            className="flex gap-2 flex-col md:flex-row "
+            onSubmit={handleSubmit}
+          >
+            <input
+              autoFocus
+              maxLength="20"
+              className="bg-white text-gray-800 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              name="quizId"
+              type="text"
+              placeholder="27364...."
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            />
+            <Button type="primary">Enter</Button>
           </form>
+          <DemoButton clickHandler={setId} callBack={getScores} />
         </>
-          :
-         <div className=" w-full max-w-screen-2xl mx-auto my-8">
-            <HeaderText>
-              <div className="flex justify-between items-end">
-                <span className="flex gap-2"><MdLeaderboard className="text-blue-500"/>LeaderBoard </span>
-                <span className="text-sm font-normal">Quiz ID : {id}</span>
-              </div>
-            </HeaderText>  
-            <ul className="flex flex-col gap-6">
-              {
-                scores &&
-                scores.map((userInfo, index) => 
-                <li className="w-full flex justify-between bg-gray-500 bg-opacity-50  p-3 rounded-lg select-none" key={index}>
-                  {index === 0 ? <><span className="text-lg flex items-center justify-center gap-2"> <FaTrophy className=" text-yellow-400"/> 1st </span> </> : 
-                    index === 1 ? <><span className="text-lg flex items-center justify-center gap-2"> <FaTrophy className=" text-gray-300"/> 2nd </span> </> : index === 2 ? 
-                    <><span className="text-lg flex items-center justify-center gap-2"> <FaTrophy className=" text-yellow-700"/> 3rd </span> </>: 
+      ) : (
+        <div className=" w-full max-w-screen-2xl mx-auto my-8">
+          <HeaderText>
+            <div className="flex justify-between items-end">
+              <span className="flex gap-2">
+                <MdLeaderboard className="text-blue-500" />
+                LeaderBoard{" "}
+              </span>
+              <span className="text-sm font-normal">Quiz ID : {id}</span>
+            </div>
+          </HeaderText>
+          <ul className="flex flex-col gap-6">
+            {scores &&
+              scores.map((userInfo, index) => (
+                <li
+                  className="w-full flex justify-between bg-gray-500 bg-opacity-50  p-3 rounded-lg select-none"
+                  key={index}
+                >
+                  {index === 0 ? (
+                    <>
+                      <span className="text-lg flex items-center justify-center gap-2">
+                        {" "}
+                        <FaTrophy className=" text-yellow-400" /> 1st{" "}
+                      </span>{" "}
+                    </>
+                  ) : index === 1 ? (
+                    <>
+                      <span className="text-lg flex items-center justify-center gap-2">
+                        {" "}
+                        <FaTrophy className=" text-gray-300" /> 2nd{" "}
+                      </span>{" "}
+                    </>
+                  ) : index === 2 ? (
+                    <>
+                      <span className="text-lg flex items-center justify-center gap-2">
+                        {" "}
+                        <FaTrophy className=" text-yellow-700" /> 3rd{" "}
+                      </span>{" "}
+                    </>
+                  ) : (
                     <span>{index + 1}th</span>
-                  }   
-                  <span>{userInfo.user_name}</span> <span>score: {userInfo.score}</span>
+                  )}
+                  <span>{userInfo.user_name}</span>{" "}
+                  <span>score: {userInfo.score}</span>
                 </li>
-                )
-                
-              }
-            </ul>
-          </div>
-        }
+              ))}
+          </ul>
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Leaderboard
+export default Leaderboard;
