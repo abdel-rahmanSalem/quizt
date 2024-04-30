@@ -19,20 +19,7 @@ function Home() {
         style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
       >
         <div className="flex flex-col items-center self-center">
-          <HeaderText>
-            <div className="max-w-3xl select-none">
-              <div className=" ">
-                <span className="text-4xl md:text-6xl font-semibold text-[#E4E4E4]">
-                  Hi there, Welcome to our Quiz Application
-                </span>
-              </div>
-              {/* <p className="text-xl md:text-3xl bg-gradient-to-br from-blue-400 to-blue-600 bg-clip-text mt-4 md:mt-8 font-normal">
-            <p className="text-transparent">
-            Join a quiz or host your own!
-            </p>
-          </p> */}
-            </div>
-          </HeaderText>
+          <HeaderText>Hi there, Welcome to our Quiz Application</HeaderText>
           <div className="flex justify-between items-center gap-8">
             <Link to="/quiz-id">
               <Button type="primary">Join a Quiz</Button>
