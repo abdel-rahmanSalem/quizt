@@ -19,14 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Global style={"flex-col"}>
-              <Home />
-            </Global>
-          }
-        ></Route>
+        <Route path="/" element={<Home />}></Route>
         <Route
           path="/quiz-id"
           element={
