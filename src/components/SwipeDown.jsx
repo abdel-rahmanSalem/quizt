@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { MdDoubleArrow } from "react-icons/md";
 
-const SwiperDown = () => {
+const SwipeDown = () => {
   const [isFloating, setIsFloating] = useState(false);
   const [showSwiper, setShowSwiper] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 120) {
+      if (window.scrollY > 65) {
         setShowSwiper(false);
       } else {
         setShowSwiper(true);
@@ -29,20 +29,20 @@ const SwiperDown = () => {
 
   return (
     <>
-      {showSwiper && (
-        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 text-gray-300 select-none">
+      <div
+        className={`fixed bottom-0 left-1/2 transform -translate-x-1/2 text-gray-300 select-none transition-opacity ${
+          showSwiper ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="transition-transform transform">
           <p className="text-lg font-semibold">How to use Quizt?</p>
-          <div
-            className={`rotate-90 transition-transform transform    ${
-              isFloating ? "translate-y-2" : ""
-            }`}
-          >
+          <div className={`rotate-90 ${isFloating ? "translate-y-2" : ""}`}>
             <MdDoubleArrow size={40} />
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };
 
-export default SwiperDown;
+export default SwipeDown;
