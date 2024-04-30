@@ -22,13 +22,11 @@ function QuizId() {
 
   if (status === "loading") return <Loader>Entering the quiz...</Loader>;
 
- 
   return (
     <>
-
       <HeaderText>Enter your quiz ID: </HeaderText>
 
-      <form className="flex gap-2 flex-col md:flex-row "  onSubmit={handleSubmit}>
+      <form className="flex gap-2 flex-col md:flex-row" onSubmit={handleSubmit}>
         <input
           autoFocus
           maxLength="20"
@@ -41,16 +39,17 @@ function QuizId() {
         />
         <Button type="primary">Join</Button>
       </form>
-      <div className="flex items-center justify-between my-4">
-        <span className="h-1 w-full bg-slate-400"></span>
-        <span>Or</span>
-        <span className="h-1 w-full bg-slate-400"></span>
+      <div className="flex items-center mt-12 mb-3">
+        <hr className="w-16 border-gray-300" />
+        <p className="mx-4 text-gray-500 font-semibold">OR</p>
+        <hr className="w-16 border-gray-300" />
       </div>
-      <div className="mt-6 w-[20rem] flex items-center">
-        <button className="underline-offset-4 max-w-max mx-auto bg-green-600 rounded-md px-3 py-2" type="submit" onClick={() => checkQuizId("123456")}> 
-            <span className="text-white ">Demo</span>
-        </button>
-      </div>
+      <button
+        className="border border-green-500 text-green-500 hover:text-white hover:bg-green-500 font-semibold py-2 px-4 rounded shadow"
+        onClick={() => checkQuizId("123456")}
+      >
+        Demo
+      </button>
     </>
   );
 }
