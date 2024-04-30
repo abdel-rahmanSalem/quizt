@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import HeaderText from "../components/HeaderText";
 
-import { IoIosArrowForward } from "react-icons/io";
 // import ShowCard from "../components/ShowCard";
 // import { MdQuestionMark } from "react-icons/md";
 // import { TiInputChecked } from "react-icons/ti";
@@ -36,18 +35,10 @@ function Home() {
           </HeaderText>
           <div className="flex justify-between items-center gap-8">
             <Link to="/quiz-id">
-              <Button type="primary">
-                <span className="flex items-center gap-3">
-                  Join a Quiz <IoIosArrowForward />
-                </span>
-              </Button>
+              <Button type="primary">Join a Quiz</Button>
             </Link>
             <Link>
-              <Button type="secondary">
-                <span className="flex items-center gap-3">
-                  Host a Quiz <IoIosArrowForward />
-                </span>
-              </Button>
+              <Button type="secondary">Host a Quiz</Button>
             </Link>
           </div>
         </div>
