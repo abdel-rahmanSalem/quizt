@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaGithub, FaLinkedin } from "react-icons/fa"; // Import social icons
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
 import { useEffect } from "react";
 import { useGlobal } from "../contexts/GlobalContext";
@@ -36,8 +36,7 @@ function Navbar() {
             >
               <MdLeaderboard className="text-xl" />
             </Link>
-            <div className="border-l border-gray-600 h-6"></div>{" "}
-            {/* Vertical line */}
+            <div className="border-l border-gray-600 h-6"></div>
             <a
               href="https://github.com/abdel-rahmanSalem"
               className="text-gray-300 text-lg hover:text-white transition duration-300"
