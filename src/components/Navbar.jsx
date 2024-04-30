@@ -24,9 +24,7 @@ function Navbar() {
             </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <Link to="/login" className="text-xl hover:text-white">
-              Host
-            </Link>
+            <Link className="text-xl hover:text-white">Host</Link>
             <Link to="/new-user" className="text-xl hover:text-white">
               Join
             </Link>

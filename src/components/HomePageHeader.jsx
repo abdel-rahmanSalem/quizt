@@ -5,7 +5,7 @@ import HeaderText from "../components/HeaderText";
 import SwipeDown from "../components/SwipeDown";
 
 function HomePageHeader() {
-  const { navbarHeight } = useGlobal();
+  const { navbarHeight, notify } = useGlobal();
 
   return (
     <>
@@ -18,8 +18,19 @@ function HomePageHeader() {
           <Link to="/quiz-id">
             <Button type="primary">Join a Quiz</Button>
           </Link>
-          <Link to="/login">
-            <Button type="secondary">Host a Quiz</Button>
+          <Link>
+            <Button
+              type="secondary"
+              onClick={() =>
+                notify(
+                  "Feature under development. Thanks for your patience!",
+                  "top-right",
+                  "info"
+                )
+              }
+            >
+              Host a Quiz
+            </Button>
           </Link>
         </div>
       </div>
