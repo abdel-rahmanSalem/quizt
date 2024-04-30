@@ -1,26 +1,18 @@
 import PropTypes from "prop-types";
 import ToastCont from "./ToastCont";
-import { useEffect, useState } from "react";
-
+import { useGlobal } from "../contexts/GlobalContext";
 function Main({ children, style }) {
-  const [navbarHeight, setNavbarHeight] = useState(0);
-
-  useEffect(() => {
-    const navbar = document.querySelector(".navbar");
-    if (navbar) {
-      const height = navbar.offsetHeight;
-      setNavbarHeight(height);
-    }
-  }, []);
-
+  const { navbarHeight } = useGlobal();
   return (
-    <div
-      className={`flex flex-col justify-center items-center bg-gray-900 text-white ${style} px-4`}
-      style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
-    >
-      <ToastCont />
-      {children}
-    </div>
+    <>
+      <div
+        className={`flex flex-col justify-center items-center  text-white  ${style} px-4`}
+        style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
+      >
+        <ToastCont />
+        {children}
+      </div>
+    </>
   );
 }
 Main.propTypes = {

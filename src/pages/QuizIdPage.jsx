@@ -16,7 +16,6 @@ function QuizId() {
     checkQuizId(id);
     setId("");
   }
-
   useEffect(() => {
     if (status === "quizLoaded") navigate("/new-user", { replace: true });
   }, [status, navigate]);
@@ -26,11 +25,12 @@ function QuizId() {
   return (
     <>
       <HeaderText>Enter your quiz ID: </HeaderText>
-      <form className="flex gap-2 flex-col md:flex-row " onSubmit={handleSubmit}>
+
+      <form className="flex gap-2 flex-col md:flex-row" onSubmit={handleSubmit}>
         <input
           autoFocus
           maxLength="20"
-          className="bg-white text-gray-800 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="bg-white border rounded-lg text-black focus:text-black px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/80"
           name="quizId"
           type="text"
           placeholder="27364...."
@@ -39,6 +39,17 @@ function QuizId() {
         />
         <Button type="primary">Join</Button>
       </form>
+      <div className="flex items-center mt-12 mb-3">
+        <hr className="w-16 border-gray-300" />
+        <p className="mx-4 text-gray-500 font-semibold">OR</p>
+        <hr className="w-16 border-gray-300" />
+      </div>
+      <button
+        className="border border-green-500 text-green-500 hover:text-white hover:bg-green-500 font-semibold py-2 px-4 rounded shadow"
+        onClick={() => checkQuizId("123456")}
+      >
+        Demo
+      </button>
     </>
   );
 }
