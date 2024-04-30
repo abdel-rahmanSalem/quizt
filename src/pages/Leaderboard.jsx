@@ -1,9 +1,8 @@
-import HeaderText from "../components/HeaderText";
-import { MdLeaderboard } from "react-icons/md";
 import { FaTrophy } from "react-icons/fa";
 import { useState } from "react";
 import Loader from "../components/Loader";
 import LeaderboardForm from "../components/LeaderboardForm";
+import LeaderboardHeader from "../components/LeaderboardHeader";
 
 const Leaderboard = () => {
   const [id, setId] = useState("");
@@ -23,15 +22,7 @@ const Leaderboard = () => {
         />
       ) : (
         <div className=" w-full max-w-screen-2xl mx-auto my-8">
-          <HeaderText>
-            <div className="flex justify-between items-end">
-              <span className="flex gap-2">
-                <MdLeaderboard className="text-blue-500" />
-                LeaderBoard{" "}
-              </span>
-              <span className="text-sm font-normal">Quiz ID : {id}</span>
-            </div>
-          </HeaderText>
+          <LeaderboardHeader id={id} />
           <ul className="flex flex-col gap-6">
             {scores &&
               scores.map((userInfo, index) => (
