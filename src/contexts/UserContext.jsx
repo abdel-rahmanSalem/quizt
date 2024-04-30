@@ -18,7 +18,8 @@ const initialState = {
   currentAnswer: -1,
   secondsRemaining: -1,
   corrected: [],
-  ansTracker: []
+  ansTracker: [],
+  scores: []
 };
 
 function reducer(state, action) {
@@ -102,8 +103,8 @@ function reducer(state, action) {
         return {
           ...state, 
           corrected: [...state.corrected, action.payload],
-          ansTracker: [...state.ansTracker, "incorrect"]
-        }
+          ansTracker: [...state.ansTracker, "incorrect"],
+        };
   }
 }
 
@@ -124,7 +125,7 @@ function UserProvider({ children }) {
     isQuizEnd,
     secondsRemaining,
     corrected,
-    ansTracker
+    ansTracker,
   } = state;
 
   const currentQuestion = questions.at(questionsIndexor);
@@ -136,11 +137,11 @@ function UserProvider({ children }) {
       return;
     }
     dispatch({ type: "loading" });
-    const { data, error } = await quiztServer
+    const { data, error } = await quiztServer 
       .from("quizzes")
       .select()
       .eq("quiz_id", id)
-      .single();
+      .single();  
 
     if (error) {
       if (error.code === "22P02")
@@ -273,6 +274,7 @@ function UserProvider({ children }) {
     }
   }
 
+
   async function handleNextQuestion() {
     if (currentAnswer === -1) {
       notify("Answer the Question Please :)", "top-right", "warn");
@@ -321,7 +323,7 @@ function UserProvider({ children }) {
         handleNextQuestion,
         handleAttemptAnotherQuiz,
         corrected,
-        ansTracker
+        ansTracker,
       }}
     >
       {children}

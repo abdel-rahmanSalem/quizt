@@ -7,8 +7,11 @@ const CorrectedAnswers = () => {
     const {corrected} = useUser();
   return (
     <div className="w-full mt-4">
-        <button className="flex items-center justify-between cursor-pointer shadow-md p-2 rounded-lg w-full hover:bg-slate-500 bg-opacity-50 duration-500" onClick={() => setShowCorrected(!showCorrected)}>
+        {
+            corrected.length > 0 &&
+            <button className="flex items-center justify-between cursor-pointer shadow-md p-2 rounded-lg w-full hover:bg-slate-500 bg-opacity-50 duration-500" onClick={() => setShowCorrected(!showCorrected)}>
             {
+                
                 showCorrected ?
                 <>
                     <p>Hide Corrected Answers</p>
@@ -22,6 +25,7 @@ const CorrectedAnswers = () => {
 
             }
         </button>
+        }
         {
             showCorrected &&
             <div className="p-2 max-h-28 overflow-y-auto">

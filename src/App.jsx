@@ -13,6 +13,7 @@ import Questions from "./pages/QuestionPage";
 import SummaryPage from "./pages/SummaryPage";
 import { HosterProvider } from "./contexts/HosterContext";
 import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
+import Leaderboard from "./pages/Leaderboard";
 
 function App() {
   return (
@@ -95,6 +96,14 @@ function App() {
           element={
             <Global>
               <PageNotFound />
+            </Global>
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={
+            <Global>
+              <Leaderboard />
             </Global>
           }
         />
