@@ -5,31 +5,31 @@ import HeaderText from "../components/HeaderText";
 // import ShowCard from "../components/ShowCard";
 // import { MdQuestionMark } from "react-icons/md";
 // import { TiInputChecked } from "react-icons/ti";
-// // import { MdKeyboardDoubleArrowUp } from "react-icons/md";
 // import { FaKeyboard } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import { useGlobal } from "../contexts/GlobalContext";
+import SwiperDown from "../components/SwipeDown";
 function Home() {
   const { navbarHeight } = useGlobal();
   return (
     <>
       <Navbar />
       <div
-        className="flex flex-col justify-center"
+        className="flex flex-col justify-center items-center"
         style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
       >
-        <div className="flex flex-col items-center self-center">
-          <HeaderText>Hi there, Welcome to our Quiz Application</HeaderText>
-          <div className="flex justify-between items-center gap-8">
-            <Link to="/quiz-id">
-              <Button type="primary">Join a Quiz</Button>
-            </Link>
-            <Link>
-              <Button type="secondary">Host a Quiz</Button>
-            </Link>
-          </div>
+        <HeaderText>Welcome to Quizt!</HeaderText>
+        <div className="flex justify-center items-center gap-8 mt-8">
+          <Link to="/quiz-id">
+            <Button type="primary">Join a Quiz</Button>
+          </Link>
+          <Link to="/login">
+            <Button type="secondary">Host a Quiz</Button>
+          </Link>
         </div>
       </div>
+      <SwiperDown>How to use Quizt?</SwiperDown>
+
       {/* <div className="mt-24 text-center ">
         <p className="font-semibold mb-6">How to use Quizt</p>
         <h1 className="font-semibold text-3xl uppercase ">To join a Quiz</h1>
