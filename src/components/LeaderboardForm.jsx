@@ -86,7 +86,7 @@ function LeaderboardForm({ id, setId, setIsLoading, setScores }) {
 }
 
 LeaderboardForm.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   setId: PropTypes.func.isRequired,
   setIsLoading: PropTypes.func.isRequired,
   setScores: PropTypes.func.isRequired,
