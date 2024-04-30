@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -10,6 +10,7 @@ const quiztServer = createClient(supabaseUrl, supabaseKey);
 const GlobalContext = createContext();
 
 function GlobalProvider({ children }) {
+  const [navbarHeight, setNavbarHeight] = useState(0);
   const notify = (message, pos, type) =>
     toast[type](message, {
       position: pos,
@@ -21,12 +22,15 @@ function GlobalProvider({ children }) {
       progress: undefined,
       theme: "dark",
     });
+
   return (
     <GlobalContext.Provider
       value={{
         quiztServer,
         notify,
         ToastContainer,
+        navbarHeight,
+        setNavbarHeight,
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
 import "react-toastify/dist/ReactToastify.css";
-import Global from "./components/GlobalUser";
+import Global from "./components/GlobalUserUI";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/HomePage";
 import Username from "./pages/UsernamePage";
@@ -19,14 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Global style={"flex-col"}>
-              <Home />
-            </Global>
-          }
-        ></Route>
+        <Route path="/" element={<Home />}></Route>
         <Route
           path="/quiz-id"
           element={

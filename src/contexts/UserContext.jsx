@@ -19,7 +19,7 @@ const initialState = {
   secondsRemaining: -1,
   corrected: [],
   ansTracker: [],
-  scores: []
+  scores: [],
 };
 
 function reducer(state, action) {
@@ -88,7 +88,11 @@ function reducer(state, action) {
         isQuizEnd: true,
       };
     case "updateUser/succes":
-      return { ...state, user: action.payload , ansTracker: [...state.ansTracker, "correct"]};
+      return {
+        ...state,
+        user: action.payload,
+        ansTracker: [...state.ansTracker, "correct"],
+      };
     case "joinAnotherQuiz":
       return {
         ...initialState,
@@ -99,12 +103,12 @@ function reducer(state, action) {
         secondsRemaining: state.secondsRemaining - 1,
         isQuizEnd: state.secondsRemaining === 0 ? true : state.isQuizEnd,
       };
-      case "correctWrongAnswers":
-        return {
-          ...state, 
-          corrected: [...state.corrected, action.payload],
-          ansTracker: [...state.ansTracker, "incorrect"],
-        };
+    case "correctWrongAnswers":
+      return {
+        ...state,
+        corrected: [...state.corrected, action.payload],
+        ansTracker: [...state.ansTracker, "incorrect"],
+      };
   }
 }
 
@@ -137,11 +141,11 @@ function UserProvider({ children }) {
       return;
     }
     dispatch({ type: "loading" });
-    const { data, error } = await quiztServer 
+    const { data, error } = await quiztServer
       .from("quizzes")
       .select()
       .eq("quiz_id", id)
-      .single();  
+      .single();
 
     if (error) {
       if (error.code === "22P02")
@@ -261,7 +265,10 @@ function UserProvider({ children }) {
   async function updateUserScore(questionPoints) {
     const { data, error } = await quiztServer
       .from("users")
-      .update({ score: user.score + questionPoints, num_correct_questions: user.num_correct_questions + 1 })
+      .update({
+        score: user.score + questionPoints,
+        num_correct_questions: user.num_correct_questions + 1,
+      })
       .eq("user_name", username)
       .select()
       .single();
@@ -274,7 +281,6 @@ function UserProvider({ children }) {
     }
   }
 
-
   async function handleNextQuestion() {
     if (currentAnswer === -1) {
       notify("Answer the Question Please :)", "top-right", "warn");
@@ -283,8 +289,15 @@ function UserProvider({ children }) {
 
     if (currentAnswer === currentQuestion.correct_option) {
       await updateUserScore(currentQuestion.points);
-    }else{
-      await dispatch({type: "correctWrongAnswers", payload: {index: questionsIndexor, question: currentQuestion.question , answer: currentQuestion.options[currentQuestion.correct_option]}})
+    } else {
+      await dispatch({
+        type: "correctWrongAnswers",
+        payload: {
+          index: questionsIndexor,
+          question: currentQuestion.question,
+          answer: currentQuestion.options[currentQuestion.correct_option],
+        },
+      });
     }
 
     if (questionsIndexor === questions.length - 1) {
