@@ -21,8 +21,20 @@ Quizt is a cutting-edge quiz platform designed for seamless participation in qui
 ## Sneak Peek 📸
 
 ![Preview 1](/public/images/Landing.png)
+
+<br>
+<hr>
+<br>
+
 ![Preview 3](/public/images/Instructions.png)
+
+<br>
+<hr>
+<br>
+
 ![Preview 2](/public/images/Leaderboard.png)
+
+<br>
 
 ## Getting Started 🚀
 
