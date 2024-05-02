@@ -1,34 +1,56 @@
-# Quiz App (Under Development)
+# Quizt
 
-This project is a quiz application developed using React, Tailwind CSS, Vite, and Supabase. It allows users to register, authenticate, host or join quizzes, answer questions, and receive real-time feedback.
+Welcome to Quizt - Your go-to quiz application! 🚀
 
-## Features
+## What is Quizt?
 
-- User registration and authentication system
-- Ability to host or join quizzes
-- Answering quiz questions and receiving instant feedback
-- Integration with Supabase for backend services and database management
+Quizt is a cutting-edge quiz platform designed for seamless participation in quizzes. Currently in beta version 0.5, Quizt offers users the chance to join quizzes effortlessly based on quiz IDs, track their performance on leaderboards, or host their own quizzes.
 
-## Technologies Used
+## Key Features 🌟
 
-- React
-- Tailwind CSS
-- Vite
-- Supabase
-- React Spinners
+- Join Quizzes: Simply ask your host for the quiz ID and you're all set to join the quiz.
+- Engaging Demo Quiz: Experience our demo quiz to test our app and get a feel for the platform.
+- Exciting Hosting Capabilities (Coming Soon): Get ready to host your own quizzes with our upcoming hosting feature.
 
-## Getting Started
+## Technologies Used 🛠️
 
-1. Clone the repository:
+- **Frontend:** React, Vite, Tailwind CSS
+- **Backend:** Supabase
+- **Additional:** React Router, React Toastify, React Spinners
 
-2. Install dependencies: `npm i`
+## Sneak Peek 📸
 
-3. Start the development server: `npm run dev`
+![Preview 1](/public/images/Landing.png)
 
-4. Visit `http://localhost:5173` in your browser to use the application.
+<br>
+<hr>
+<br>
 
-## Contributing
+![Preview 3](/public/images/Instructions.png)
 
-Contributions are welcome! Feel free to open an issue or submit a pull request.
+<br>
+<hr>
+<br>
 
-<hr/>
+![Preview 2](/public/images/Leaderboard.png)
+
+<br>
+
+## Getting Started 🚀
+
+1. Clone the repository.
+2. Install dependencies with `npm install`.
+3. Run the development server with `npm run dev`.
+4. Access the application at [http://localhost:5173](http://localhost:5173).
+
+## Contribution Guidelines 🤝
+
+- Fork the repository and create a new branch for your changes.
+- Avoid making pull requests directly into the main branch.
+- Don't hesitate to reach out for assistance or to discuss new feature ideas!
+
+**Note:** Please refrain from pulling directly into the main branch.
+
+## Beta Release 0.5 🚀
+
+We're thrilled to announce that Quizt beta version 0.5 is now live! Join us on this exciting journey as we continue to refine and enhance the Quizt experience.

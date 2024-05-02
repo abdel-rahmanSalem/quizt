@@ -1,30 +1,19 @@
-import { Link } from "react-router-dom";
-import Button from "../components/Button";
-import HeaderText from "../components/HeaderText";
-
-import { useUser } from "../contexts/UserContext";
+import Navbar from "../components/Navbar";
+import HomePageHeader from "../components/HomePageHeader";
+import Instructions from "../components/Instructions";
+import Footer from "../components/Footer";
+import ToastCont from "../components/ToastCont";
 
 function Home() {
-  const { notify } = useUser();
-
   return (
     <>
-      <HeaderText>Hi there, Welcome to our Quiz Application</HeaderText>
-      <div className="flex justify-between items-center gap-8">
-        <Link to="/quiz-id">
-          <Button type="primary">Join a Quiz</Button>
-        </Link>
-        <Link>
-          <Button
-            onClick={() =>
-              notify("This feature is underdevelopment", "top-right", "info")
-            }
-            type="secondary"
-          >
-            Host a Quiz
-          </Button>
-        </Link>
+      <div className="bg-gradient-to-b from-gray-900 to-gray-950">
+        <ToastCont />
+        <Navbar />
+        <HomePageHeader />
+        <Instructions />
       </div>
+      <Footer />
     </>
   );
 }

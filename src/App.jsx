@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
 import "react-toastify/dist/ReactToastify.css";
-import Global from "./components/GlobalUser";
+import Global from "./components/GlobalUserUI";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/HomePage";
 import Username from "./pages/UsernamePage";
@@ -13,19 +13,13 @@ import Questions from "./pages/QuestionPage";
 import SummaryPage from "./pages/SummaryPage";
 import { HosterProvider } from "./contexts/HosterContext";
 import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
+import Leaderboard from "./pages/Leaderboard";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Global style={"flex-col"}>
-              <Home />
-            </Global>
-          }
-        ></Route>
+        <Route path="/" element={<Home />}></Route>
         <Route
           path="/quiz-id"
           element={
@@ -95,6 +89,14 @@ function App() {
           element={
             <Global>
               <PageNotFound />
+            </Global>
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={
+            <Global>
+              <Leaderboard />
             </Global>
           }
         />
