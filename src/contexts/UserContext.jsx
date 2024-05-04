@@ -223,7 +223,7 @@ function UserProvider({ children }) {
     }
     // return data ? data[0] : null;
     if (data) {
-      if (data.length === 1) return true;
+      if (data.length >= 1) return true;
       if (data.length === 0) return false;
     }
   }

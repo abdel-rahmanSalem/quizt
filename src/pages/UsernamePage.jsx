@@ -8,13 +8,18 @@ import { useEffect, useState } from "react";
 function Username() {
   const [displayName, setDisplayName] = useState("");
   const { submitNewUser, status } = useUser();
+  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
+    setIsBtnDisabled(true);
+
     e.preventDefault();
 
-    submitNewUser(displayName);
+    await submitNewUser(displayName);
+
+    setIsBtnDisabled(false);
   }
 
   useEffect(() => {
@@ -39,7 +44,9 @@ function Username() {
           onChange={(e) => setDisplayName(e.target.value)}
         />
 
-        <Button type="primary">Next</Button>
+        <Button type="primary" isDisabled={isBtnDisabled}>
+          Next
+        </Button>
       </form>
     </>
   );
