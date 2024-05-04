@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { IoIosArrowForward } from "react-icons/io";
 
-function Button({ children, type, onClick }) {
+function Button({ children, type, onClick, isDisabled = false }) {
   const primaryClasses = "bg-blue-600 hover:bg-blue-500 ";
   const secondaryClasses = "hover:bg-green-500 bg-green-600";
 
@@ -13,7 +13,7 @@ function Button({ children, type, onClick }) {
   }`;
 
   return (
-    <button onClick={onClick} className={buttonClasses}>
+    <button onClick={onClick} disabled={isDisabled} className={buttonClasses}>
       {children}
       <IoIosArrowForward />
     </button>
@@ -24,6 +24,7 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   type: PropTypes.oneOf(["primary", "secondary"]).isRequired,
   onClick: PropTypes.func,
+  isDisabled: PropTypes.bool,
 };
 
 export default Button;
