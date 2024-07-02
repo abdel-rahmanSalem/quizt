@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useGlobal } from "../contexts/GlobalContext";
 import HeaderText from "../components/HeaderText";
-import Button from "../components/Button";
+import Button from "./ForwardButton";
 import DemoButton from "../components/DemoButton";
 function LeaderboardForm({ id, setId, setIsLoading, setScores }) {
   const { quiztServer, notify } = useGlobal();

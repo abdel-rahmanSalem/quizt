@@ -3,6 +3,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
 import { useEffect } from "react";
 import { useGlobal } from "../contexts/GlobalContext";
+import Logo from "./Logo";
 
 function Navbar() {
   const { setNavbarHeight } = useGlobal();
@@ -20,11 +21,13 @@ function Navbar() {
         <div className="flex justify-between items-center">
           <div>
             <Link to="/" className=" text-3xl font-semibold">
-              <span className="text-blue-600">Q</span>uizt
+              <Logo />
             </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <Link className="text-xl hover:text-white">Host</Link>
+            <Link to="/sign-in" className="text-xl hover:text-white">
+              Host
+            </Link>
             <Link to="/new-user" className="text-xl hover:text-white">
               Join
             </Link>

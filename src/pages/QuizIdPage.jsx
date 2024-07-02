@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import HeaderText from "../components/HeaderText";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import Button from "../components/Button";
+import Button from "../components/ForwardButton";
 import Loader from "../components/Loader";
 import DemoButton from "../components/DemoButton";
 

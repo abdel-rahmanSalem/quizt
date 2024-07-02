@@ -6,12 +6,11 @@ import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/HomePage";
 import Username from "./pages/UsernamePage";
 import QuizId from "./pages/QuizIdPage";
-import Login from "./pages/Login";
+import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
 import Quiz from "./pages/QuizPage";
 import Questions from "./pages/QuestionPage";
 import SummaryPage from "./pages/SummaryPage";
-import { HosterProvider } from "./contexts/HosterContext";
 import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
 import Leaderboard from "./pages/Leaderboard";
 
@@ -68,14 +67,7 @@ function App() {
             </Global>
           }
         ></Route>
-        <Route
-          path="/login"
-          element={
-            <HosterProvider>
-              <Login />
-            </HosterProvider>
-          }
-        ></Route>
+        <Route path="/sign-in" element={<Signin />}></Route>
         <Route
           path="/dashboard"
           element={

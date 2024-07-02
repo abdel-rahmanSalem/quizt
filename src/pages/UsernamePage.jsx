@@ -1,6 +1,6 @@
 import HeaderText from "../components/HeaderText";
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
+import Button from "../components/ForwardButton";
 import Loader from "../components/Loader";
 import { useUser } from "../contexts/UserContext";
 import { useEffect, useState } from "react";

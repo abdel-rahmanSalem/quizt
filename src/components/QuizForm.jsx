@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "./ForwardButton";
 import Input from "./Input";
 
 function QuizForm() {

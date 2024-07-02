@@ -1,11 +1,11 @@
 import { useGlobal } from "../contexts/GlobalContext";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
+import Button from "./ForwardButton";
 import HeaderText from "../components/HeaderText";
 import SwipeDown from "../components/SwipeDown";
 
 function HomePageHeader() {
-  const { navbarHeight, notify } = useGlobal();
+  const { navbarHeight } = useGlobal();
 
   return (
     <>
@@ -18,19 +18,8 @@ function HomePageHeader() {
           <Link to="/quiz-id">
             <Button type="primary">Join a Quiz</Button>
           </Link>
-          <Link>
-            <Button
-              type="secondary"
-              onClick={() =>
-                notify(
-                  "Feature under development. Thanks for your patience!",
-                  "top-right",
-                  "info"
-                )
-              }
-            >
-              Host a Quiz
-            </Button>
+          <Link to="sign-in">
+            <Button type="secondary">Host a Quiz</Button>
           </Link>
         </div>
       </div>
