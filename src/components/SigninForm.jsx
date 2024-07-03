@@ -19,8 +19,8 @@ function SigninForm() {
     setPassword(e.target.value);
   }
   return (
-    <div className="px-5 xl:flex xl:w-8/12 xl:px-0">
-      <div className="flex flex-col gap-4 bg-white p-10 mx-5 xl:mx-0.5 xl:w-6/12 rounded-sm">
+    <div className="xl:flex xl:w-8/12 xl:px-0">
+      <div className="flex flex-col gap-4 bg-white p-10 mx-5 rounded-md xl:mx-0.5 xl:w-6/12 xl:rounded-sm">
         <div className="text-5xl font-semibold">
           <Logo />
         </div>
