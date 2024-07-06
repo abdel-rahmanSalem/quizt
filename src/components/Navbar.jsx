@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import useGlobal from "../contexts/useGlobal";
+
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
-import { useEffect } from "react";
-import { useGlobal } from "../contexts/GlobalContext";
 import Logo from "./Logo";
 
 function Navbar() {

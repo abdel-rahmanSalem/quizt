@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 
@@ -21,16 +21,8 @@ function ToastProvider({ children }) {
   );
 }
 
-function useToast() {
-  const context = useContext(ToastContext);
-  if (context === undefined)
-    throw new Error("ToastContext was used outside of the ToastProvider");
-  return context;
-}
-
 ToastProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
-export { ToastProvider, useToast };
+export { ToastProvider, ToastContext };

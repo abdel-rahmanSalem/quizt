@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useUser } from "../contexts/UserContext";
+import useUser from "../contexts/useUser";
 
 function CompletionMessage({ percentage }) {
   const { quiz } = useUser();

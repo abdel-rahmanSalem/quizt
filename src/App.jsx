@@ -1,6 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
 import "react-toastify/dist/ReactToastify.css";
+
+import { GlobalProvider } from "./contexts/GlobalProvider";
+import { UserProvider } from "./contexts/UserProvider";
+import { AuthProvider } from "./contexts/AuthProvider";
+
+import ProtectedUserRoute from "./protectedRoutes/ProtectedUserRoute";
+import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
+
 import GlobalUserUI from "./components/GlobalUserUI";
 import PageNotFound from "./pages/PageNotFound";
 import Home from "./pages/HomePage";
@@ -11,13 +18,10 @@ import Dashboard from "./pages/Dashboard";
 import Quiz from "./pages/QuizPage";
 import Questions from "./pages/QuestionPage";
 import SummaryPage from "./pages/SummaryPage";
-import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
 import Leaderboard from "./pages/Leaderboard";
-import { AuthProvider } from "./contexts/AuthContext";
-import { UserProvider } from "./contexts/UserContext";
-import { GlobalProvider } from "./contexts/GlobalContext";
+
 import ToastCont from "./components/ToastCont";
-import { ToastProvider } from "./contexts/ToastContext";
+import { ToastProvider } from "./contexts/ToastProvider";
 
 function App() {
   return (

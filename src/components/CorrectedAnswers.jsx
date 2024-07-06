@@ -1,6 +1,6 @@
 import { useState } from "react";
+import useUser from "../contexts/useUser";
 import { BsArrowDown, BsArrowUp } from "react-icons/bs";
-import { useUser } from "../contexts/UserContext";
 
 const CorrectedAnswers = () => {
   const [showCorrected, setShowCorrected] = useState(false);

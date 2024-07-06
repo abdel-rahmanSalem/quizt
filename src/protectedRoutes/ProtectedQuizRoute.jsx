@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../contexts/UserContext";
+import useUser from "../contexts/useUser";
 
 function ProtectedQuizRoute({ children }) {
   const { quiz } = useUser();

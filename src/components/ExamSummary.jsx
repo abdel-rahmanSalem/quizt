@@ -1,10 +1,10 @@
-import { useUser } from "../contexts/UserContext";
+import useUser from "../contexts/useUser";
 import Rank from "../components/Rank";
 import CompletionMessage from "../components/CompletionMessage";
 import Percentage from "../components/Percentage";
 import AnswersSum from "./AnswersSum";
 function ExamSummary() {
-  const { quiz, user} = useUser();
+  const { quiz, user } = useUser();
   const { max_points } = quiz;
   const { score } = user;
   const percentage = (score / max_points) * 100;

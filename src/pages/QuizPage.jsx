@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useUser } from "../contexts/UserContext";
+import useUser from "../contexts/useUser";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/ForwardButton";
 import Loader from "../components/Loader";

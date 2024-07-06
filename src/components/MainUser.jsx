@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { useGlobal } from "../contexts/GlobalContext";
+import useGlobal from "../contexts/useGlobal";
+
 function Main({ children, style }) {
   const { navbarHeight } = useGlobal();
   return (

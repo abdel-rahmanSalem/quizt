@@ -1,8 +1,7 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
 import PropTypes from "prop-types";
-
-import { useGlobal } from "./GlobalContext";
-import { useToast } from "./ToastContext";
+import useGlobal from "./useGlobal";
+import useToast from "./useToast";
 
 const UserContext = createContext();
 
@@ -346,16 +345,8 @@ function UserProvider({ children }) {
   );
 }
 
-function useUser() {
-  const context = useContext(UserContext);
-  if (context === undefined)
-    throw new Error("UserContext was used outside of the QuizProvider");
-  return context;
-}
-
 UserProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
-export { UserProvider, useUser };
+export { UserProvider, UserContext };

@@ -1,10 +1,14 @@
 import PropTypes from "prop-types";
-import { useGlobal } from "../contexts/GlobalContext";
+import useGlobal from "../contexts/useGlobal";
+import useToast from "../contexts/useToast";
+
 import HeaderText from "../components/HeaderText";
 import Button from "./ForwardButton";
 import DemoButton from "../components/DemoButton";
+
 function LeaderboardForm({ id, setId, setIsLoading, setScores }) {
-  const { quiztServer, notify } = useGlobal();
+  const { quiztServer } = useGlobal();
+  const { notify } = useToast();
 
   async function getScores(id) {
     if (id.trim().length < 4) {

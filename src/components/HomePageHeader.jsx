@@ -1,4 +1,4 @@
-import { useGlobal } from "../contexts/GlobalContext";
+import useGlobal from "../contexts/useGlobal";
 import { Link } from "react-router-dom";
 import Button from "./ForwardButton";
 import HeaderText from "../components/HeaderText";

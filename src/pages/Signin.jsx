@@ -1,7 +1,7 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import SigninForm from "../components/SigninForm";
-import { useGlobal } from "../contexts/GlobalContext";
+import useGlobal from "../contexts/useGlobal";
 
 function Signin() {
   const { navbarHeight } = useGlobal();

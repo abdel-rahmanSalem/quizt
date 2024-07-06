@@ -1,4 +1,4 @@
-import { useUser } from "../contexts/UserContext";
+import useUser from "../contexts/useUser";
 
 function ProgressBar() {
   const { questionsIndexor, quiz } = useUser();

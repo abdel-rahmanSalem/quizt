@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useUser } from "../contexts/UserContext";
+import useUser from "../contexts/useUser";
 
 function Timer() {
   const { secondsRemaining, tick } = useUser();

@@ -1,5 +1,5 @@
+import useUser from "../contexts/useUser";
 import Options from "./Options";
-import { useUser } from "../contexts/UserContext";
 
 function QuestionMain() {
   const { currentQuestion } = useUser();

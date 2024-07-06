@@ -1,6 +1,6 @@
+import useUser from "../contexts/useUser";
 import { FaChevronRight } from "react-icons/fa";
 import Timer from "./Timer";
-import { useUser } from "../contexts/UserContext";
 
 function QuestionFooter() {
   const { handleNextQuestion } = useUser();

@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useUser from "../contexts/useUser";
+
 import ProgressBar from "../components/ProgressBar";
 import QuestionFooter from "../components/QuestionFooter";
 import QuestionMain from "../components/QuestionMain";
-import { useUser } from "../contexts/UserContext";
 
 function Questions() {
   const { isQuizEnd } = useUser();

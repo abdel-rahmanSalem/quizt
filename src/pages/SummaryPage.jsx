@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../contexts/UserContext";
+import useUser from "../contexts/useUser";
 import Button from "../components/ForwardButton";
 import ExamSummary from "../components/ExamSummary";
 import { IoShareOutline } from "react-icons/io5";
