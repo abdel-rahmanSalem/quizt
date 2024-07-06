@@ -13,95 +13,100 @@ import Questions from "./pages/QuestionPage";
 import SummaryPage from "./pages/SummaryPage";
 import ProtectedQuizRoute from "./protectedRoutes/ProtectedQuizRoute";
 import Leaderboard from "./pages/Leaderboard";
-import { AuthProvider } from "./contexts/authContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import { UserProvider } from "./contexts/UserContext";
 import { GlobalProvider } from "./contexts/GlobalContext";
+import ToastCont from "./components/ToastCont";
+import { ToastProvider } from "./contexts/ToastContext";
 
 function App() {
   return (
     <GlobalProvider>
-      <UserProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />}></Route>
-              <Route
-                path="/quiz-id"
-                element={
-                  <GlobalUserUI style={"flex-col"}>
-                    <QuizId />
-                  </GlobalUserUI>
-                }
-              ></Route>
-              <Route
-                path="/new-user"
-                element={
-                  <GlobalUserUI style={"flex-col"}>
-                    <ProtectedQuizRoute>
-                      <Username />
-                    </ProtectedQuizRoute>
-                  </GlobalUserUI>
-                }
-              ></Route>
-              <Route
-                path="quiz"
-                element={
-                  <GlobalUserUI>
-                    <ProtectedUserRoute>
-                      <Quiz />
-                    </ProtectedUserRoute>
-                  </GlobalUserUI>
-                }
-              ></Route>
-              <Route
-                path="/quiz/questions"
-                element={
-                  <GlobalUserUI>
-                    <ProtectedUserRoute>
-                      <Questions />
-                    </ProtectedUserRoute>
-                  </GlobalUserUI>
-                }
-              ></Route>
-              <Route
-                path="/quiz/summary"
-                element={
-                  <GlobalUserUI>
-                    <ProtectedUserRoute>
-                      <SummaryPage />
-                    </ProtectedUserRoute>
-                  </GlobalUserUI>
-                }
-              ></Route>
-              <Route path="/sign-in" element={<Signin />}></Route>
-              <Route
-                path="/dashboard"
-                element={
-                  <GlobalUserUI style={"flex-col"}>
-                    <Dashboard />
-                  </GlobalUserUI>
-                }
-              ></Route>
-              <Route
-                path="*"
-                element={
-                  <GlobalUserUI>
-                    <PageNotFound />
-                  </GlobalUserUI>
-                }
-              />
-              <Route
-                path="/leaderboard"
-                element={
-                  <GlobalUserUI>
-                    <Leaderboard />
-                  </GlobalUserUI>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
-      </UserProvider>
+      <ToastProvider>
+        <UserProvider>
+          <AuthProvider>
+            <ToastCont />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route
+                  path="/quiz-id"
+                  element={
+                    <GlobalUserUI style={"flex-col"}>
+                      <QuizId />
+                    </GlobalUserUI>
+                  }
+                ></Route>
+                <Route
+                  path="/new-user"
+                  element={
+                    <GlobalUserUI style={"flex-col"}>
+                      <ProtectedQuizRoute>
+                        <Username />
+                      </ProtectedQuizRoute>
+                    </GlobalUserUI>
+                  }
+                ></Route>
+                <Route
+                  path="quiz"
+                  element={
+                    <GlobalUserUI>
+                      <ProtectedUserRoute>
+                        <Quiz />
+                      </ProtectedUserRoute>
+                    </GlobalUserUI>
+                  }
+                ></Route>
+                <Route
+                  path="/quiz/questions"
+                  element={
+                    <GlobalUserUI>
+                      <ProtectedUserRoute>
+                        <Questions />
+                      </ProtectedUserRoute>
+                    </GlobalUserUI>
+                  }
+                ></Route>
+                <Route
+                  path="/quiz/summary"
+                  element={
+                    <GlobalUserUI>
+                      <ProtectedUserRoute>
+                        <SummaryPage />
+                      </ProtectedUserRoute>
+                    </GlobalUserUI>
+                  }
+                ></Route>
+                <Route path="/sign-in" element={<Signin />}></Route>
+                <Route
+                  path="/dashboard"
+                  element={
+                    <GlobalUserUI style={"flex-col"}>
+                      <Dashboard />
+                    </GlobalUserUI>
+                  }
+                ></Route>
+                <Route
+                  path="*"
+                  element={
+                    <GlobalUserUI>
+                      <PageNotFound />
+                    </GlobalUserUI>
+                  }
+                />
+                <Route
+                  path="/leaderboard"
+                  element={
+                    <GlobalUserUI>
+                      <Leaderboard />
+                    </GlobalUserUI>
+                  }
+                />
+              </Routes>
+            </BrowserRouter>
+          </AuthProvider>
+        </UserProvider>
+      </ToastProvider>
     </GlobalProvider>
   );
 }

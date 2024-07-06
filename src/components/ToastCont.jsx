@@ -1,8 +1,6 @@
-import { useGlobal } from "../contexts/GlobalContext";
+import { ToastContainer } from "react-toastify";
 
 function ToastCont() {
-  const { ToastContainer } = useGlobal();
-
   return (
     <ToastContainer
       position="top-right"

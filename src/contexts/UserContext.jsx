@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer } from "react";
 import PropTypes from "prop-types";
 
 import { useGlobal } from "./GlobalContext";
+import { useToast } from "./ToastContext";
 
 const UserContext = createContext();
 
@@ -113,7 +114,8 @@ function reducer(state, action) {
 }
 
 function UserProvider({ children }) {
-  const { quiztServer, notify } = useGlobal();
+  const { quiztServer } = useGlobal();
+  const { notify } = useToast();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
