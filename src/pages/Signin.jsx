@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import SigninForm from "../components/SigninForm";
 import { useGlobal } from "../contexts/GlobalContext";
@@ -13,6 +14,7 @@ function Signin() {
       >
         <SigninForm />
       </div>
+      <Footer />
     </>
   );
 }
