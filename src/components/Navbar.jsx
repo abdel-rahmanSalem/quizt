@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import useGlobal from "../contexts/useGlobal";
 
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { MdLeaderboard } from "react-icons/md";
 import Logo from "./Logo";
 
 function Navbar() {
@@ -17,26 +16,18 @@ function Navbar() {
     }
   }, [setNavbarHeight]);
   return (
-    <nav className="text-gray-300 p-4 navbar">
+    <nav className="text-gray-300 px-6 pt-6 navbar">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
-          <div>
-            <Link to="/" className=" text-3xl font-semibold">
-              <Logo />
-            </Link>
+          <div className="text-4xl font-semibold">
+            <Logo />
           </div>
           <div className="flex items-center space-x-4">
-            <Link to="/sign-in" className="text-xl hover:text-white">
-              Host
-            </Link>
-            <Link to="/new-user" className="text-xl hover:text-white">
-              Join
-            </Link>
             <Link
               to="/leaderboard"
-              className="text-gray-300 text-xl hover:text-white"
+              className="border border-gray-300 text-gray-300 px-2 py-1 rounded hover:bg-gray-700 hover:border-transparent transition duration-300"
             >
-              <MdLeaderboard className="text-xl" />
+              <span className="font-medium">LeaderBoard</span>
             </Link>
             <div className="border-l border-gray-600 h-6"></div>
             <a

@@ -8,7 +8,9 @@ function DemoButton({ clickHandler, callBack }) {
   }
   return (
     <>
-      <DividerWithText>OR</DividerWithText>
+      <div className="flex items-center mt-12 mb-3">
+        <DividerWithText>OR</DividerWithText>
+      </div>
       <button
         type="submit"
         className="border border-green-500 text-green-500 hover:text-white hover:bg-green-500 font-semibold py-2 px-4 rounded shadow"

@@ -28,9 +28,9 @@ function App() {
     <GlobalProvider>
       <ToastProvider>
         <UserProvider>
-          <AuthProvider>
-            <ToastCont />
-            <BrowserRouter>
+          <ToastCont />
+          <BrowserRouter>
+            <AuthProvider>
               <Routes>
                 <Route path="/" element={<Home />}></Route>
                 <Route
@@ -107,8 +107,8 @@ function App() {
                   }
                 />
               </Routes>
-            </BrowserRouter>
-          </AuthProvider>
+            </AuthProvider>
+          </BrowserRouter>
         </UserProvider>
       </ToastProvider>
     </GlobalProvider>

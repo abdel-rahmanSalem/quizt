@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import PropTypes from "prop-types";
 import useGlobal from "./useGlobal";
 import useToast from "./useToast";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -9,6 +10,7 @@ function AuthProvider({ children }) {
   const { quiztServer } = useGlobal();
   const { notify } = useToast();
 
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   async function loginViaEmail({ email, password }) {
@@ -20,8 +22,9 @@ function AuthProvider({ children }) {
         password,
       });
 
-      if (data) {
-        console.log(data);
+      if (data?.user) {
+        // console.log(data);
+        navigate("/dashboard");
       }
 
       if (error) {

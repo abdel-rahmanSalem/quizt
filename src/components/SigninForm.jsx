@@ -23,9 +23,12 @@ function SigninForm() {
     if (!email || !password) {
       !email
         ? notify("Email is required.", "top-right", "warn")
-        : !isValidEmail(email)
-        ? notify("Email is not valid.", "top-right", "warn")
         : notify("Password is required.", "top-right", "warn");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      notify("Email is not valid.", "top-right", "warn");
       return;
     }
 

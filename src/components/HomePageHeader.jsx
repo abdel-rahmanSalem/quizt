@@ -1,7 +1,6 @@
 import useGlobal from "../contexts/useGlobal";
 import { Link } from "react-router-dom";
 import Button from "./ForwardButton";
-import HeaderText from "../components/HeaderText";
 import SwipeDown from "../components/SwipeDown";
 
 function HomePageHeader() {
@@ -13,7 +12,9 @@ function HomePageHeader() {
         className="flex flex-col justify-center items-center"
         style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
       >
-        <HeaderText>Welcome to Quizt!</HeaderText>
+        <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8">
+          Your Only Quiz Hub!
+        </h1>
         <div className="flex justify-center items-center gap-8 mt-8">
           <Link to="/quiz-id">
             <Button type="primary">Join a Quiz</Button>
