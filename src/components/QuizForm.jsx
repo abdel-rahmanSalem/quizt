@@ -10,7 +10,7 @@ function QuizForm() {
       <Input name="duration" id="duration" type="number">
         Quiz duration
       </Input>
-      <Button type="secondry">Start the quiz</Button>
+      <Button type="secondary">Start the quiz</Button>
     </form>
   );
 }
