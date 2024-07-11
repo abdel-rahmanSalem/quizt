@@ -3,7 +3,7 @@ import Button from "../ForwardButton";
 
 function HeroActionButtons() {
   return (
-    <div className=" z-10 flex justify-center items-center gap-8 mt-10">
+    <div className=" z-10 flex justify-center items-center gap-8 mt-24">
       <Link to="/quiz-id">
         <Button type="primary">Join a Quiz</Button>
       </Link>
