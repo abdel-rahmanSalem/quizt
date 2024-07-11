@@ -5,7 +5,7 @@ function HeroSection() {
   return (
     <div className="flex flex-col items-center justify-center my-24">
       <h1 className="text-4xl sm:text-5xl lg:text-7xl text-center tracking-wide">
-        Your Only <span className="text-cyan-600">Quiz Hub</span>!
+        Your Only <span className="text-green-500">Quiz Hub</span>!
       </h1>
       <p className="mt-8 mx-2 text-base lg:text-lg text-center text-neutral-400 max-w-2xl font-medium">
         your one-stop hub for all things quiz-related. Easily create and host
