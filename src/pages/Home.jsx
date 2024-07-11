@@ -1,4 +1,4 @@
-import HeroSection from "../ui/HeroSection";
+import HeroSection from "../ui/Home/HeroSection";
 // import Instructions from "../components/Instructions";
 
 function Home() {
