@@ -1,4 +1,4 @@
-import Button from "./ForwardButton";
+import Button from "../ui/ForwardButton";
 import Input from "../components/Input";
 
 function QuestionForm() {

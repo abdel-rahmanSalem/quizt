@@ -3,7 +3,7 @@ import useGlobal from "../contexts/useGlobal";
 import useToast from "../contexts/useToast";
 
 import HeaderText from "../components/HeaderText";
-import Button from "./ForwardButton";
+import Button from "../ui/ForwardButton";
 import DemoButton from "../components/DemoButton";
 
 function LeaderboardForm({ id, setId, setIsLoading, setScores }) {

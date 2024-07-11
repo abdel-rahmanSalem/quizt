@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 function AppLayout() {
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-gray-950">
+    <div className="bg-gradient-to-b from-gray-900 to-gray-950 ">
       <Navbar />
       <Outlet />
       <Footer />

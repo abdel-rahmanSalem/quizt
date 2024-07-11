@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useUser from "../contexts/useUser";
 import { useNavigate } from "react-router-dom";
-import Button from "../components/ForwardButton";
+import Button from "../ui/ForwardButton";
 import Loader from "../components/Loader";
 
 function Quiz() {

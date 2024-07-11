@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useUser from "../contexts/useUser";
-import Button from "../components/ForwardButton";
+import Button from "../ui/ForwardButton";
 import ExamSummary from "../components/ExamSummary";
 import { IoShareOutline } from "react-icons/io5";
 import CorrectedAnswers from "../components/CorrectedAnswers";
