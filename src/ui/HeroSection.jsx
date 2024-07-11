@@ -4,7 +4,7 @@ import Button from "./ForwardButton";
 function HeroSection() {
   return (
     <div className="flex flex-col items-center justify-center my-20">
-      <h1 className="text-4xl sm:text-5xl lg:text-7xl text-center tracking-wide">
+      <h1 className="font-bold text-4xl sm:text-5xl lg:text-7xl text-center tracking-wide">
         Your Only <span className="text-blue-400">Quiz Hub</span>.
       </h1>
       <p className="mt-8 mx-2 text-base lg:text-lg text-center text-neutral-400 max-w-2xl font-medium">
