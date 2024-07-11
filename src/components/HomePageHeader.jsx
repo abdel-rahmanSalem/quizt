@@ -1,20 +1,26 @@
-import useGlobal from "../contexts/useGlobal";
+// import useGlobal from "../contexts/useGlobal";
 import { Link } from "react-router-dom";
 import Button from "./ForwardButton";
 import SwipeDown from "../components/SwipeDown";
 
 function HomePageHeader() {
-  const { navbarHeight } = useGlobal();
+  // const { navbarHeight } = useGlobal();
 
   return (
     <>
       <div
-        className="flex flex-col justify-center items-center"
-        style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
+        className="flex flex-col justify-center items-center h-screen"
+        // style={{ minHeight: `calc(100vh - ${navbarHeight}px)` }}
       >
         <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8">
           Your Only Quiz Hub!
         </h1>
+        <p>
+          Welcome to Quizt, your one-stop hub for all things quiz-related.
+          Easily create and host quizzes or participate in existing ones to
+          challenge your intellect. Join us and transform your quizzing
+          experience!
+        </p>
         <div className="flex justify-center items-center gap-8 mt-8">
           <Link to="/quiz-id">
             <Button type="primary">Join a Quiz</Button>

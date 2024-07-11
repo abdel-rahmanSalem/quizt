@@ -1,20 +1,20 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import useGlobal from "../contexts/useGlobal";
+// import useGlobal from "../contexts/useGlobal";
 
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Logo from "./Logo";
 
 function Navbar() {
-  const { setNavbarHeight } = useGlobal();
-  // calc the height of the navbar
-  useEffect(() => {
-    const navbar = document.querySelector(".navbar");
-    if (navbar) {
-      const height = navbar.offsetHeight;
-      setNavbarHeight(height);
-    }
-  }, [setNavbarHeight]);
+  // const { setNavbarHeight } = useGlobal();
+  // // calc the height of the navbar
+  // useEffect(() => {
+  //   const navbar = document.querySelector(".navbar");
+  //   if (navbar) {
+  //     const height = navbar.offsetHeight;
+  //     setNavbarHeight(height);
+  //   }
+  // }, [setNavbarHeight]);
   return (
     <nav className="text-gray-300 px-6 pt-6 navbar">
       <div className="max-w-7xl mx-auto">

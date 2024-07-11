@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Navbar from "./Navbar.jsx";
 import Main from "./MainUser.jsx";
-import Footer from "./Footer.jsx";
+import Footer from "../ui/Footer.jsx";
 function GlobalUserUI({ children, style }) {
   return (
     <>
