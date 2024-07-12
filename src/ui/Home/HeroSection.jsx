@@ -4,13 +4,18 @@ import ShapesMotion from "../ShapesMotion";
 
 function HeroSection() {
   return (
-    <div className="relative">
-      <div className="flex flex-col items-center justify-center my-20">
-        <HeroText />
-        <HeroActionButtons />
-      </div>
+    <>
+      <section
+        id="#"
+        className="h-screen flex flex-col items-center justify-center pt-16  relative"
+      >
+        <div className="flex flex-col justify-center h-full">
+          <HeroText />
+          <HeroActionButtons />
+        </div>
+      </section>
       <ShapesMotion />
-    </div>
+    </>
   );
 }
 

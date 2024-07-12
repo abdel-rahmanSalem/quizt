@@ -1,22 +1,44 @@
 import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-
+import { navLinks } from "../../constants/navLinks";
+import DesktopNavLink from "./DesktopNavLink";
+import { useState } from "react";
 function DesktopNav() {
+  const [activeLink, setActiveLink] = useState("#");
+
   return (
     <>
       <ul className="hidden md:flex items-center space-x-5">
-        <li className="text-gray-300 hover:text-white transition duration-300">
-          <Link to="/">Home</Link>
+        {navLinks.map((link) => (
+          <DesktopNavLink
+            path={link.path}
+            activeLink={activeLink}
+            setActiveLink={setActiveLink}
+            key={link.path}
+          >
+            {link.name}
+          </DesktopNavLink>
+        ))}
+        {/* <li className="text-gray-300 hover:text-white transition duration-300">
+          <HashLink to="#" smooth>
+            Home
+          </HashLink>
         </li>
         <li className="text-gray-300 hover:text-white transition duration-300">
-          <Link to="/">How to Join</Link>
+          <HashLink to="#how-to-join" smooth>
+            How to Join
+          </HashLink>
         </li>
         <li className="text-gray-300 hover:text-white transition duration-300">
-          <Link to="/">How to Host</Link>
+          <HashLink to="#how-to-host" smooth>
+            How to Host
+          </HashLink>
         </li>
         <li className="text-gray-300 hover:text-white transition duration-300">
-          <Link to="/">Contact</Link>
-        </li>
+          <HashLink to="#contact" smooth>
+            Contact
+          </HashLink>
+        </li> */}
         <div className="border-l border-gray-600 h-6"></div>
         <li>
           <a
