@@ -17,7 +17,7 @@ function ShapesMotion() {
             ease: "easeInOut",
           }}
           style={{
-            top: `${Math.random() * 60 + 20}%`,
+            top: `${Math.random() * 80 + 10}%`,
             left: `${Math.random() * 60 + 20}%`,
           }}
         />
