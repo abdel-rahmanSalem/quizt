@@ -9,7 +9,7 @@ function MobileNav({ setIsOpen }) {
   }
 
   return (
-    <ul className="md:hidden flex flex-col items-center gap-6 py-8 w-full">
+    <ul className="flex w-full flex-col items-center gap-6 py-8 md:hidden">
       {navLinks.map((link) => (
         <MobileNavLink
           path={link.path}
@@ -19,15 +19,15 @@ function MobileNav({ setIsOpen }) {
           {link.name}
         </MobileNavLink>
       ))}
-      <li className="border border-gray-300 text-gray-300 font-medium px-2 py-1 rounded hover:bg-gray-700 hover:border-transparent transition duration-300">
+      <li className="rounded border border-gray-300 px-2 py-1 font-medium text-gray-300 transition duration-300 hover:border-transparent hover:bg-gray-700">
         <Link to="/leaderboard">Leaderboard</Link>
       </li>
 
       <hr className="w-16 border-gray-300" />
-      <li className="flex justify-center gap-4 w-full">
+      <li className="flex w-full justify-center gap-4">
         <a
           href="https://github.com/abdel-rahmanSalem"
-          className="text-gray-300 text-lg hover:text-white transition duration-300"
+          className="text-lg text-gray-300 transition duration-300 hover:text-white"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -35,7 +35,7 @@ function MobileNav({ setIsOpen }) {
         </a>
         <a
           href="https://www.linkedin.com/in/abd-el-rahman-salem"
-          className="text-gray-300 text-lg hover:text-white transition duration-300"
+          className="text-lg text-gray-300 transition duration-300 hover:text-white"
           target="_blank"
           rel="noopener noreferrer"
         >

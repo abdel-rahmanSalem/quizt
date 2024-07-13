@@ -9,7 +9,7 @@ function DesktopNav() {
 
   return (
     <>
-      <ul className="hidden md:flex items-center space-x-5">
+      <ul className="hidden items-center space-x-5 md:flex">
         {navLinks.map((link) => (
           <DesktopNavLink
             path={link.path}
@@ -20,11 +20,11 @@ function DesktopNav() {
             {link.name}
           </DesktopNavLink>
         ))}
-        <div className="border-l border-gray-600 h-6"></div>
+        <div className="h-6 border-l border-gray-600"></div>
         <li>
           <a
             href="https://github.com/abdel-rahmanSalem"
-            className="text-gray-300 text-lg hover:text-white transition duration-300"
+            className="text-lg text-gray-300 transition duration-300 hover:text-white"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -34,7 +34,7 @@ function DesktopNav() {
         <li>
           <a
             href="https://www.linkedin.com/in/abd-el-rahman-salem"
-            className="text-gray-300 text-lg hover:text-white transition duration-300"
+            className="text-lg text-gray-300 transition duration-300 hover:text-white"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -44,7 +44,7 @@ function DesktopNav() {
       </ul>
       <Link
         to="/leaderboard"
-        className="hidden md:block font-medium border border-gray-300 text-gray-300 px-2 py-1 rounded hover:bg-gray-700 hover:border-transparent transition duration-300"
+        className="hidden rounded border border-gray-300 px-2 py-1 font-medium text-gray-300 transition duration-300 hover:border-transparent hover:bg-gray-700 md:block"
       >
         LeaderBoard
       </Link>

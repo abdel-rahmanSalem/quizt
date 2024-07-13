@@ -6,9 +6,9 @@ function HeroSection() {
   return (
     <section
       id="#"
-      className="h-screen flex flex-col items-center justify-center md:pt-16 relative"
+      className="relative flex h-screen flex-col items-center justify-center md:pt-16"
     >
-      <div className="flex flex-col justify-center h-full">
+      <div className="flex h-full flex-col justify-center">
         <HeroText />
         <HeroActionButtons />
         <ShapesMotion />

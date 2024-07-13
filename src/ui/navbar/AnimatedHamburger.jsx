@@ -4,16 +4,16 @@ function AnimatedHamburger({ isOpen, setIsOpen }) {
   };
 
   return (
-    <button className="md:hidden relative group" onClick={toggleOpen}>
-      <div className="relative flex flex-col overflow-hidden items-center justify-center rounded-full w-[40px] h-[40px] transform transition-all bg-slate-800 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
+    <button className="group relative md:hidden" onClick={toggleOpen}>
+      <div className="relative flex h-[40px] w-[40px] transform flex-col items-center justify-center overflow-hidden rounded-full bg-slate-800 shadow-md ring-0 ring-gray-300 ring-opacity-30 transition-all duration-200 hover:ring-8 group-focus:ring-4">
         <div
-          className={`transform transition-all duration-150 overflow-hidden ${
+          className={`transform overflow-hidden transition-all duration-150 ${
             isOpen ? "translate-y-3" : "-translate-y-5"
           }`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 animate-bounce text-white stroke-2"
+            className="h-5 w-5 animate-bounce stroke-2 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -26,19 +26,19 @@ function AnimatedHamburger({ isOpen, setIsOpen }) {
           </svg>
         </div>
 
-        <div className="flex flex-col justify-center items-center gap-1 w-[15px] h-[15px] transform transition-all duration-300 origin-center">
+        <div className="flex h-[15px] w-[15px] origin-center transform flex-col items-center justify-center gap-1 transition-all duration-300">
           <div
-            className={`bg-gray-300  h-[2px] w-4 transform transition-all duration-300 origin-left ${
+            className={`h-[2px] w-4 origin-left transform bg-gray-300 transition-all duration-300 ${
               isOpen ? "translate-y-9" : "-translate-y-2.5"
             }`}
           ></div>
           <div
-            className={`bg-gray-300  h-[2px] w-4 rounded transform transition-all duration-300 delay-75 ${
+            className={`h-[2px] w-4 transform rounded bg-gray-300 transition-all delay-75 duration-300 ${
               isOpen ? "translate-y-9" : "-translate-y-2.5"
             }`}
           ></div>
           <div
-            className={`bg-gray-300 h-[2px] w-4 transform transition-all duration-300 origin-left delay-100 ${
+            className={`h-[2px] w-4 origin-left transform bg-gray-300 transition-all delay-100 duration-300 ${
               isOpen ? "translate-y-9" : "-translate-y-2.5"
             }`}
           ></div>

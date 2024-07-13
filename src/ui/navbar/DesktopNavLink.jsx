@@ -5,7 +5,7 @@ function DesktopNavLink({ children, path, activeLink, setActiveLink }) {
     <li
       className={`${
         activeLink === path ? "text-blue-400" : "text-gray-300 hover:text-white"
-      }  transition duration-300`}
+      } transition duration-300`}
     >
       <HashLink to={path} smooth onClick={() => setActiveLink(path)}>
         {children}
