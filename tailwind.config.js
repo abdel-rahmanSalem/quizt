@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      poppins: ["poppins", "sans-serif"],
+      sans: ["Kanit", "sans-serif"],
     },
   },
   plugins: [],
